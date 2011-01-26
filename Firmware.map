@@ -1,0 +1,440 @@
+Archive member included because of file (symbol)
+
+c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+                              c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o (exit)
+c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+                              Firmware.o (__do_copy_data)
+c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                              Firmware.o (__do_clear_bss)
+
+Allocating common symbols
+Common symbol       size              file
+
+FilterRelayOut      0x1               Firmware.o
+TargetCurrent       0x1               Firmware.o
+ManualAuto          0x1               Firmware.o
+ItWasManual         0x1               Firmware.o
+TimerBeep           0x4               Firmware.o
+FilterLimitOut      0x1               Firmware.o
+TargetLimitUp       0x1               Firmware.o
+TargetRelayDown     0x1               Firmware.o
+Urequested          0x2               Firmware.o
+IsFlashing          0x1               Firmware.o
+Target1Select       0x1               Firmware.o
+Uadc                0x2               Firmware.o
+FilterRelayIn       0x1               Firmware.o
+rxbuff              0x1               Firmware.o
+Target2Select       0x1               Firmware.o
+systime             0x4               Firmware.o
+TargetRelayUp       0x1               Firmware.o
+FilterRequested     0x1               Firmware.o
+FilterLimitIn       0x1               Firmware.o
+TargetLimitDown     0x1               Firmware.o
+TargetActual        0x1               Firmware.o
+FilterCurrent       0x1               Firmware.o
+TargetRequested     0x1               Firmware.o
+intflags            0x1               Firmware.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00020000         xr
+data             0x00800060         0x0000ffa0         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o
+LOAD Firmware.o
+LOAD c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a
+LOAD c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5\libc.a
+LOAD c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000     0x1458
+ *(.vectors)
+ .vectors       0x00000000       0x54 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o
+                0x00000000                __vectors
+                0x00000000                __vector_default
+ *(.vectors)
+ *(.progmem.gcc*)
+ *(.progmem*)
+ .progmem.data  0x00000054       0x64 Firmware.o
+                0x000000b8                . = ALIGN (0x2)
+                0x000000b8                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x000000b8        0x0 linker stubs
+ *(.trampolines*)
+                0x000000b8                __trampolines_end = .
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x000000b8                __ctors_start = .
+ *(.ctors)
+                0x000000b8                __ctors_end = .
+                0x000000b8                __dtors_start = .
+ *(.dtors)
+                0x000000b8                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x000000b8        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o
+                0x000000b8                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x000000b8        0xc c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o
+ *(.init2)
+ *(.init3)
+ .init3         0x000000c4        0x8 Firmware.o
+                0x000000c4                handle_mcucsr
+ *(.init3)
+ *(.init4)
+ .init4         0x000000cc       0x16 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+                0x000000cc                __do_copy_data
+ .init4         0x000000e2       0x10 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                0x000000e2                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x000000f2        0x8 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o
+ *(.init9)
+ *(.text)
+ .text          0x000000fa        0x4 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o
+                0x000000fa                __vector_1
+                0x000000fa                __vector_12
+                0x000000fa                __bad_interrupt
+                0x000000fa                __vector_6
+                0x000000fa                __vector_3
+                0x000000fa                __vector_13
+                0x000000fa                __vector_17
+                0x000000fa                __vector_19
+                0x000000fa                __vector_7
+                0x000000fa                __vector_5
+                0x000000fa                __vector_4
+                0x000000fa                __vector_2
+                0x000000fa                __vector_15
+                0x000000fa                __vector_10
+                0x000000fa                __vector_16
+                0x000000fa                __vector_18
+                0x000000fa                __vector_20
+ .text          0x000000fe     0x1356 Firmware.o
+                0x000008b6                printstr
+                0x00000d5e                read_message
+                0x0000017c                RELAY_OFF
+                0x000008d6                printstr_p
+                0x000008a0                write_binary
+                0x00000f1e                write_message
+                0x00000fc8                do_cmd
+                0x000006ee                uchar2h
+                0x000000fe                RELAY_ON
+                0x00000240                MoveTargetOut
+                0x0000086c                __vector_11
+                0x00000b3c                scan_uint16
+                0x00000202                IS_RELAY_ON
+                0x00000898                putchr
+                0x000008f8                ioinit
+                0x00001274                main
+                0x00000a70                read_uint16
+                0x0000035a                Algorithm
+                0x00000750                __vector_9
+                0x00000c18                read_binary
+                0x000007c2                __vector_8
+                0x00000bfe                calc_crc
+                0x0000071a                h2uchar
+                0x00000838                __vector_14
+                0x000002f0                TargetCare
+ .text          0x00001454        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ .text          0x00001454        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+ .text          0x00001454        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                0x00001454                . = ALIGN (0x2)
+ *(.text.*)
+ .text.libgcc   0x00001454        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00001454        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00001454        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                0x00001454                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x00001454        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+                0x00001454                exit
+                0x00001454                _exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x00001454        0x4 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ *(.fini0)
+                0x00001458                _etext = .
+
+.data           0x00800060       0x36 load address 0x00001458
+                0x00800060                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00800060        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o
+ .data          0x00800060       0x36 Firmware.o
+ .data          0x00800096        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ .data          0x00800096        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+ .data          0x00800096        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ *(.gnu.linkonce.d*)
+                0x00800096                . = ALIGN (0x2)
+                0x00800096                _edata = .
+                0x00800096                PROVIDE (__data_end, .)
+
+.bss            0x00800096       0x23
+                0x00800096                PROVIDE (__bss_start, .)
+ *(.bss)
+ .bss           0x00800096        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm16.o
+ .bss           0x00800096        0x3 Firmware.o
+ .bss           0x00800099        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ .bss           0x00800099        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+ .bss           0x00800099        0x0 c:/winavr-20090313/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+ *(.bss*)
+ *(COMMON)
+ COMMON         0x00800099       0x20 Firmware.o
+                0x00800099                FilterRelayOut
+                0x0080009a                TargetCurrent
+                0x0080009b                ManualAuto
+                0x0080009c                ItWasManual
+                0x0080009d                TimerBeep
+                0x008000a1                FilterLimitOut
+                0x008000a2                TargetLimitUp
+                0x008000a3                TargetRelayDown
+                0x008000a4                Urequested
+                0x008000a6                IsFlashing
+                0x008000a7                Target1Select
+                0x008000a8                Uadc
+                0x008000aa                FilterRelayIn
+                0x008000ab                rxbuff
+                0x008000ac                Target2Select
+                0x008000ad                systime
+                0x008000b1                TargetRelayUp
+                0x008000b2                FilterRequested
+                0x008000b3                FilterLimitIn
+                0x008000b4                TargetLimitDown
+                0x008000b5                TargetActual
+                0x008000b6                FilterCurrent
+                0x008000b7                TargetRequested
+                0x008000b8                intflags
+                0x008000b9                PROVIDE (__bss_end, .)
+                0x00001458                __data_load_start = LOADADDR (.data)
+                0x0000148e                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x008000b9        0x1
+                0x008000b9                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+ .noinit        0x008000b9        0x1 Firmware.o
+                0x008000b9                mcucsr
+                0x008000ba                PROVIDE (__noinit_end, .)
+                0x008000ba                _end = .
+                0x008000ba                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000       0x28
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x28 Firmware.o
+
+.debug_pubnames
+                0x00000000      0x325
+ *(.debug_pubnames)
+ .debug_pubnames
+                0x00000000      0x325 Firmware.o
+
+.debug_info     0x00000000      0xf09
+ *(.debug_info)
+ .debug_info    0x00000000      0xf09 Firmware.o
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev   0x00000000      0x338
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x338 Firmware.o
+
+.debug_line     0x00000000     0x1076
+ *(.debug_line)
+ .debug_line    0x00000000     0x1076 Firmware.o
+
+.debug_frame    0x00000000      0x1b0
+ *(.debug_frame)
+ .debug_frame   0x00000000      0x1b0 Firmware.o
+
+.debug_str      0x00000000      0x398
+ *(.debug_str)
+ .debug_str     0x00000000      0x398 Firmware.o
+                                0x3f0 (size before relaxing)
+
+.debug_loc      0x00000000      0x7dd
+ *(.debug_loc)
+ .debug_loc     0x00000000      0x7dd Firmware.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+OUTPUT(Firmware.elf elf32-avr)
+LOAD linker stubs
+
+.debug_ranges   0x00000000      0x248
+ .debug_ranges  0x00000000      0x248 Firmware.o

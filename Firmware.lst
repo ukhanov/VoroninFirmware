@@ -1,0 +1,3519 @@
+
+Firmware.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00001458  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000036  00800060  00001458  000014ec  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000023  00800096  00800096  00001522  2**0
+                  ALLOC
+  3 .noinit       00000001  008000b9  008000b9  00001522  2**0
+                  ALLOC
+  4 .debug_aranges 00000028  00000000  00000000  00001522  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_pubnames 00000325  00000000  00000000  0000154a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000f09  00000000  00000000  0000186f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000338  00000000  00000000  00002778  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00001076  00000000  00000000  00002ab0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000001b0  00000000  00000000  00003b28  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000398  00000000  00000000  00003cd8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000007dd  00000000  00000000  00004070  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000248  00000000  00000000  0000484d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+       0:	0c 94 5c 00 	jmp	0xb8	; 0xb8 <__ctors_end>
+       4:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+       8:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+       c:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      10:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      14:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      18:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      1c:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      20:	0c 94 e1 03 	jmp	0x7c2	; 0x7c2 <__vector_8>
+      24:	0c 94 a8 03 	jmp	0x750	; 0x750 <__vector_9>
+      28:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      2c:	0c 94 36 04 	jmp	0x86c	; 0x86c <__vector_11>
+      30:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      34:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      38:	0c 94 1c 04 	jmp	0x838	; 0x838 <__vector_14>
+      3c:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      40:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      44:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      48:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      4c:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+      50:	0c 94 7d 00 	jmp	0xfa	; 0xfa <__bad_interrupt>
+
+00000054 <__c.2620>:
+      54:	0a 4d 65 73 73 61 67 65 20 69 73 20 74 6f 6f 20     .Message is too 
+      64:	6c 6f 6e 67 0a 00                                   long..
+
+0000006a <__c.2617>:
+      6a:	0a 54 72 61 6e 73 6d 69 73 73 69 6f 6e 20 65 72     .Transmission er
+      7a:	72 6f 72 0a 00                                      ror..
+
+0000007f <__c.2613>:
+      7f:	0a 54 6f 6f 20 6d 61 6e 79 20 73 74 72 61 79 20     .Too many stray 
+      8f:	69 6e 74 65 72 72 75 70 74 73 2e 20 4d 65 73 73     interrupts. Mess
+      9f:	61 67 65 20 69 73 20 6e 6f 74 20 72 65 61 64 0a     age is not read.
+	...
+
+000000b0 <__c.2501>:
+      b0:	53 50 49 4e 55 37 30 00                             SPINU70.
+
+000000b8 <__ctors_end>:
+      b8:	11 24       	eor	r1, r1
+      ba:	1f be       	out	0x3f, r1	; 63
+      bc:	cf e5       	ldi	r28, 0x5F	; 95
+      be:	d4 e0       	ldi	r29, 0x04	; 4
+      c0:	de bf       	out	0x3e, r29	; 62
+      c2:	cd bf       	out	0x3d, r28	; 61
+
+000000c4 <handle_mcucsr>:
+ */
+void handle_mcucsr(void)
+  __attribute__((section(".init3")))
+  __attribute__((naked));
+void handle_mcucsr(void)
+{
+      c4:	84 b7       	in	r24, 0x34	; 52
+      c6:	80 93 b9 00 	sts	0x00B9, r24
+  mcucsr = MCUCSR;
+  MCUCSR = 0;
+      ca:	14 be       	out	0x34, r1	; 52
+
+000000cc <__do_copy_data>:
+      cc:	10 e0       	ldi	r17, 0x00	; 0
+      ce:	a0 e6       	ldi	r26, 0x60	; 96
+      d0:	b0 e0       	ldi	r27, 0x00	; 0
+      d2:	e8 e5       	ldi	r30, 0x58	; 88
+      d4:	f4 e1       	ldi	r31, 0x14	; 20
+      d6:	02 c0       	rjmp	.+4      	; 0xdc <.do_copy_data_start>
+
+000000d8 <.do_copy_data_loop>:
+      d8:	05 90       	lpm	r0, Z+
+      da:	0d 92       	st	X+, r0
+
+000000dc <.do_copy_data_start>:
+      dc:	a6 39       	cpi	r26, 0x96	; 150
+      de:	b1 07       	cpc	r27, r17
+      e0:	d9 f7       	brne	.-10     	; 0xd8 <.do_copy_data_loop>
+
+000000e2 <__do_clear_bss>:
+      e2:	10 e0       	ldi	r17, 0x00	; 0
+      e4:	a6 e9       	ldi	r26, 0x96	; 150
+      e6:	b0 e0       	ldi	r27, 0x00	; 0
+      e8:	01 c0       	rjmp	.+2      	; 0xec <.do_clear_bss_start>
+
+000000ea <.do_clear_bss_loop>:
+      ea:	1d 92       	st	X+, r1
+
+000000ec <.do_clear_bss_start>:
+      ec:	a9 3b       	cpi	r26, 0xB9	; 185
+      ee:	b1 07       	cpc	r27, r17
+      f0:	e1 f7       	brne	.-8      	; 0xea <.do_clear_bss_loop>
+      f2:	0e 94 3a 09 	call	0x1274	; 0x1274 <main>
+      f6:	0c 94 2a 0a 	jmp	0x1454	; 0x1454 <_exit>
+
+000000fa <__bad_interrupt>:
+      fa:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000fe <RELAY_ON>:
+uint8_t IS_RELAY_ON(uint8_t Relay);
+
+//---------------------------------------------------------------------------
+void RELAY_ON(uint8_t Relay)
+{
+	if(((Relay)&0x10) && ((Relay)&0x20)) 	PORTD |= _BV(GET_PIN(Relay));
+      fe:	48 2f       	mov	r20, r24
+     100:	50 e0       	ldi	r21, 0x00	; 0
+     102:	ca 01       	movw	r24, r20
+     104:	80 71       	andi	r24, 0x10	; 16
+     106:	90 70       	andi	r25, 0x00	; 0
+     108:	44 ff       	sbrs	r20, 4
+     10a:	0f c0       	rjmp	.+30     	; 0x12a <RELAY_ON+0x2c>
+     10c:	45 ff       	sbrs	r20, 5
+     10e:	0d c0       	rjmp	.+26     	; 0x12a <RELAY_ON+0x2c>
+     110:	22 b3       	in	r18, 0x12	; 18
+     112:	47 70       	andi	r20, 0x07	; 7
+     114:	50 70       	andi	r21, 0x00	; 0
+     116:	81 e0       	ldi	r24, 0x01	; 1
+     118:	90 e0       	ldi	r25, 0x00	; 0
+     11a:	02 c0       	rjmp	.+4      	; 0x120 <RELAY_ON+0x22>
+     11c:	88 0f       	add	r24, r24
+     11e:	99 1f       	adc	r25, r25
+     120:	4a 95       	dec	r20
+     122:	e2 f7       	brpl	.-8      	; 0x11c <RELAY_ON+0x1e>
+     124:	28 2b       	or	r18, r24
+     126:	22 bb       	out	0x12, r18	; 18
+     128:	08 95       	ret
+	else 	if((Relay)&0x20) 				PORTC |= _BV(GET_PIN(Relay));
+     12a:	45 ff       	sbrs	r20, 5
+     12c:	0d c0       	rjmp	.+26     	; 0x148 <RELAY_ON+0x4a>
+     12e:	25 b3       	in	r18, 0x15	; 21
+     130:	47 70       	andi	r20, 0x07	; 7
+     132:	50 70       	andi	r21, 0x00	; 0
+     134:	81 e0       	ldi	r24, 0x01	; 1
+     136:	90 e0       	ldi	r25, 0x00	; 0
+     138:	02 c0       	rjmp	.+4      	; 0x13e <RELAY_ON+0x40>
+     13a:	88 0f       	add	r24, r24
+     13c:	99 1f       	adc	r25, r25
+     13e:	4a 95       	dec	r20
+     140:	e2 f7       	brpl	.-8      	; 0x13a <RELAY_ON+0x3c>
+     142:	28 2b       	or	r18, r24
+     144:	25 bb       	out	0x15, r18	; 21
+     146:	08 95       	ret
+     148:	47 70       	andi	r20, 0x07	; 7
+     14a:	50 70       	andi	r21, 0x00	; 0
+	else 	if((Relay)&0x10) 				PORTB |= _BV(GET_PIN(Relay));
+     14c:	89 2b       	or	r24, r25
+     14e:	59 f0       	breq	.+22     	; 0x166 <RELAY_ON+0x68>
+     150:	28 b3       	in	r18, 0x18	; 24
+     152:	81 e0       	ldi	r24, 0x01	; 1
+     154:	90 e0       	ldi	r25, 0x00	; 0
+     156:	02 c0       	rjmp	.+4      	; 0x15c <RELAY_ON+0x5e>
+     158:	88 0f       	add	r24, r24
+     15a:	99 1f       	adc	r25, r25
+     15c:	4a 95       	dec	r20
+     15e:	e2 f7       	brpl	.-8      	; 0x158 <RELAY_ON+0x5a>
+     160:	28 2b       	or	r18, r24
+     162:	28 bb       	out	0x18, r18	; 24
+     164:	08 95       	ret
+	else 									PORTA |= _BV(GET_PIN(Relay));
+     166:	2b b3       	in	r18, 0x1b	; 27
+     168:	81 e0       	ldi	r24, 0x01	; 1
+     16a:	90 e0       	ldi	r25, 0x00	; 0
+     16c:	02 c0       	rjmp	.+4      	; 0x172 <RELAY_ON+0x74>
+     16e:	88 0f       	add	r24, r24
+     170:	99 1f       	adc	r25, r25
+     172:	4a 95       	dec	r20
+     174:	e2 f7       	brpl	.-8      	; 0x16e <RELAY_ON+0x70>
+     176:	28 2b       	or	r18, r24
+     178:	2b bb       	out	0x1b, r18	; 27
+     17a:	08 95       	ret
+
+0000017c <RELAY_OFF>:
+}
+//---------------------------------------------------------------------------
+
+void RELAY_OFF(uint8_t Relay)
+{
+	if(((Relay)&0x10) && ((Relay)&0x20))	PORTD &= ~(_BV(GET_PIN(Relay)));
+     17c:	48 2f       	mov	r20, r24
+     17e:	50 e0       	ldi	r21, 0x00	; 0
+     180:	ca 01       	movw	r24, r20
+     182:	80 71       	andi	r24, 0x10	; 16
+     184:	90 70       	andi	r25, 0x00	; 0
+     186:	44 ff       	sbrs	r20, 4
+     188:	10 c0       	rjmp	.+32     	; 0x1aa <RELAY_OFF+0x2e>
+     18a:	45 ff       	sbrs	r20, 5
+     18c:	0e c0       	rjmp	.+28     	; 0x1aa <RELAY_OFF+0x2e>
+     18e:	22 b3       	in	r18, 0x12	; 18
+     190:	47 70       	andi	r20, 0x07	; 7
+     192:	50 70       	andi	r21, 0x00	; 0
+     194:	81 e0       	ldi	r24, 0x01	; 1
+     196:	90 e0       	ldi	r25, 0x00	; 0
+     198:	02 c0       	rjmp	.+4      	; 0x19e <RELAY_OFF+0x22>
+     19a:	88 0f       	add	r24, r24
+     19c:	99 1f       	adc	r25, r25
+     19e:	4a 95       	dec	r20
+     1a0:	e2 f7       	brpl	.-8      	; 0x19a <RELAY_OFF+0x1e>
+     1a2:	80 95       	com	r24
+     1a4:	82 23       	and	r24, r18
+     1a6:	82 bb       	out	0x12, r24	; 18
+     1a8:	08 95       	ret
+	else 	if((Relay)&0x20) 				PORTC &= ~(_BV(GET_PIN(Relay)));
+     1aa:	45 ff       	sbrs	r20, 5
+     1ac:	0e c0       	rjmp	.+28     	; 0x1ca <RELAY_OFF+0x4e>
+     1ae:	25 b3       	in	r18, 0x15	; 21
+     1b0:	47 70       	andi	r20, 0x07	; 7
+     1b2:	50 70       	andi	r21, 0x00	; 0
+     1b4:	81 e0       	ldi	r24, 0x01	; 1
+     1b6:	90 e0       	ldi	r25, 0x00	; 0
+     1b8:	02 c0       	rjmp	.+4      	; 0x1be <RELAY_OFF+0x42>
+     1ba:	88 0f       	add	r24, r24
+     1bc:	99 1f       	adc	r25, r25
+     1be:	4a 95       	dec	r20
+     1c0:	e2 f7       	brpl	.-8      	; 0x1ba <RELAY_OFF+0x3e>
+     1c2:	80 95       	com	r24
+     1c4:	82 23       	and	r24, r18
+     1c6:	85 bb       	out	0x15, r24	; 21
+     1c8:	08 95       	ret
+     1ca:	47 70       	andi	r20, 0x07	; 7
+     1cc:	50 70       	andi	r21, 0x00	; 0
+	else 	if((Relay)&0x10) 				PORTB &= ~(_BV(GET_PIN(Relay)));
+     1ce:	89 2b       	or	r24, r25
+     1d0:	61 f0       	breq	.+24     	; 0x1ea <RELAY_OFF+0x6e>
+     1d2:	28 b3       	in	r18, 0x18	; 24
+     1d4:	81 e0       	ldi	r24, 0x01	; 1
+     1d6:	90 e0       	ldi	r25, 0x00	; 0
+     1d8:	02 c0       	rjmp	.+4      	; 0x1de <RELAY_OFF+0x62>
+     1da:	88 0f       	add	r24, r24
+     1dc:	99 1f       	adc	r25, r25
+     1de:	4a 95       	dec	r20
+     1e0:	e2 f7       	brpl	.-8      	; 0x1da <RELAY_OFF+0x5e>
+     1e2:	80 95       	com	r24
+     1e4:	82 23       	and	r24, r18
+     1e6:	88 bb       	out	0x18, r24	; 24
+     1e8:	08 95       	ret
+	else 									PORTA &= ~(_BV(GET_PIN(Relay)));
+     1ea:	2b b3       	in	r18, 0x1b	; 27
+     1ec:	81 e0       	ldi	r24, 0x01	; 1
+     1ee:	90 e0       	ldi	r25, 0x00	; 0
+     1f0:	02 c0       	rjmp	.+4      	; 0x1f6 <RELAY_OFF+0x7a>
+     1f2:	88 0f       	add	r24, r24
+     1f4:	99 1f       	adc	r25, r25
+     1f6:	4a 95       	dec	r20
+     1f8:	e2 f7       	brpl	.-8      	; 0x1f2 <RELAY_OFF+0x76>
+     1fa:	80 95       	com	r24
+     1fc:	82 23       	and	r24, r18
+     1fe:	8b bb       	out	0x1b, r24	; 27
+     200:	08 95       	ret
+
+00000202 <IS_RELAY_ON>:
+
+uint8_t IS_RELAY_ON(uint8_t Relay)
+{
+uint8_t r;
+
+	if(((Relay)&0x10) && ((Relay)&0x20))	r = PIND;
+     202:	28 2f       	mov	r18, r24
+     204:	30 e0       	ldi	r19, 0x00	; 0
+     206:	c9 01       	movw	r24, r18
+     208:	80 71       	andi	r24, 0x10	; 16
+     20a:	90 70       	andi	r25, 0x00	; 0
+     20c:	24 ff       	sbrs	r18, 4
+     20e:	04 c0       	rjmp	.+8      	; 0x218 <IS_RELAY_ON+0x16>
+     210:	25 ff       	sbrs	r18, 5
+     212:	02 c0       	rjmp	.+4      	; 0x218 <IS_RELAY_ON+0x16>
+     214:	80 b3       	in	r24, 0x10	; 16
+     216:	09 c0       	rjmp	.+18     	; 0x22a <IS_RELAY_ON+0x28>
+	else 	if((Relay)&0x20) 				r = PINC;
+     218:	25 ff       	sbrs	r18, 5
+     21a:	02 c0       	rjmp	.+4      	; 0x220 <IS_RELAY_ON+0x1e>
+     21c:	83 b3       	in	r24, 0x13	; 19
+     21e:	05 c0       	rjmp	.+10     	; 0x22a <IS_RELAY_ON+0x28>
+	else 	if((Relay)&0x10) 				r = PINB;
+     220:	89 2b       	or	r24, r25
+     222:	11 f0       	breq	.+4      	; 0x228 <IS_RELAY_ON+0x26>
+     224:	86 b3       	in	r24, 0x16	; 22
+     226:	01 c0       	rjmp	.+2      	; 0x22a <IS_RELAY_ON+0x28>
+	else 									r = PINA;
+     228:	89 b3       	in	r24, 0x19	; 25
+     22a:	90 e0       	ldi	r25, 0x00	; 0
+     22c:	27 70       	andi	r18, 0x07	; 7
+     22e:	30 70       	andi	r19, 0x00	; 0
+     230:	02 c0       	rjmp	.+4      	; 0x236 <IS_RELAY_ON+0x34>
+     232:	95 95       	asr	r25
+     234:	87 95       	ror	r24
+     236:	2a 95       	dec	r18
+     238:	e2 f7       	brpl	.-8      	; 0x232 <IS_RELAY_ON+0x30>
+     23a:	80 95       	com	r24
+	return (r & _BV(GET_PIN(Relay))) == 0 ? 1 : 0;
+}
+     23c:	81 70       	andi	r24, 0x01	; 1
+     23e:	08 95       	ret
+
+00000240 <MoveTargetOut>:
+	RELAY_OFF(Target2Select); 	\
+	wdt_reset();				\
+}
+
+void MoveTargetOut()
+{// if target is in the beam move it out.
+     240:	cf 93       	push	r28
+     242:	df 93       	push	r29
+
+	RELAY_OFF(TargetRelayUp);
+     244:	80 91 b1 00 	lds	r24, 0x00B1
+     248:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+	if(IS_RELAY_ON(TargetLimitDown)) return;
+     24c:	80 91 b4 00 	lds	r24, 0x00B4
+     250:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     254:	88 23       	and	r24, r24
+     256:	09 f0       	breq	.+2      	; 0x25a <MoveTargetOut+0x1a>
+     258:	48 c0       	rjmp	.+144    	; 0x2ea <MoveTargetOut+0xaa>
+	RELAY_ON(TargetRelayDown);
+     25a:	80 91 a3 00 	lds	r24, 0x00A3
+     25e:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+     262:	c0 e9       	ldi	r28, 0x90	; 144
+     264:	d1 e0       	ldi	r29, 0x01	; 1
+     266:	28 c0       	rjmp	.+80     	; 0x2b8 <MoveTargetOut+0x78>
+	while(!IS_RELAY_ON(TargetLimitDown))
+	{
+		SET_TIMER(TimerBeep, (ONE_SECOND/2));
+     268:	80 91 9d 00 	lds	r24, 0x009D
+     26c:	90 91 9e 00 	lds	r25, 0x009E
+     270:	a0 91 9f 00 	lds	r26, 0x009F
+     274:	b0 91 a0 00 	lds	r27, 0x00A0
+     278:	00 97       	sbiw	r24, 0x00	; 0
+     27a:	a1 05       	cpc	r26, r1
+     27c:	b1 05       	cpc	r27, r1
+     27e:	a1 f4       	brne	.+40     	; 0x2a8 <MoveTargetOut+0x68>
+     280:	80 91 ad 00 	lds	r24, 0x00AD
+     284:	90 91 ae 00 	lds	r25, 0x00AE
+     288:	a0 91 af 00 	lds	r26, 0x00AF
+     28c:	b0 91 b0 00 	lds	r27, 0x00B0
+     290:	88 59       	subi	r24, 0x98	; 152
+     292:	9f 4e       	sbci	r25, 0xEF	; 239
+     294:	af 4f       	sbci	r26, 0xFF	; 255
+     296:	bf 4f       	sbci	r27, 0xFF	; 255
+     298:	80 93 9d 00 	sts	0x009D, r24
+     29c:	90 93 9e 00 	sts	0x009E, r25
+     2a0:	a0 93 9f 00 	sts	0x009F, r26
+     2a4:	b0 93 a0 00 	sts	0x00A0, r27
+     2a8:	88 e8       	ldi	r24, 0x88	; 136
+     2aa:	93 e1       	ldi	r25, 0x13	; 19
+     2ac:	fe 01       	movw	r30, r28
+     2ae:	31 97       	sbiw	r30, 0x01	; 1
+     2b0:	f1 f7       	brne	.-4      	; 0x2ae <MoveTargetOut+0x6e>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+     2b2:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+     2b4:	d9 f7       	brne	.-10     	; 0x2ac <MoveTargetOut+0x6c>
+		_delay_ms(500.);   // wait for half a second
+		wdt_reset();		
+     2b6:	a8 95       	wdr
+{// if target is in the beam move it out.
+
+	RELAY_OFF(TargetRelayUp);
+	if(IS_RELAY_ON(TargetLimitDown)) return;
+	RELAY_ON(TargetRelayDown);
+	while(!IS_RELAY_ON(TargetLimitDown))
+     2b8:	80 91 b4 00 	lds	r24, 0x00B4
+     2bc:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     2c0:	88 23       	and	r24, r24
+     2c2:	91 f2       	breq	.-92     	; 0x268 <MoveTargetOut+0x28>
+	{
+		SET_TIMER(TimerBeep, (ONE_SECOND/2));
+		_delay_ms(500.);   // wait for half a second
+		wdt_reset();		
+	}
+	intflags.adc_int = 0;
+     2c4:	80 91 b8 00 	lds	r24, 0x00B8
+     2c8:	8d 7f       	andi	r24, 0xFD	; 253
+     2ca:	80 93 b8 00 	sts	0x00B8, r24
+	intflags.tmr_int = 0;
+     2ce:	80 91 b8 00 	lds	r24, 0x00B8
+     2d2:	8e 7f       	andi	r24, 0xFE	; 254
+     2d4:	80 93 b8 00 	sts	0x00B8, r24
+	intflags.rx_int = 0;  // alas! the device will loose a message if any.
+     2d8:	80 91 b8 00 	lds	r24, 0x00B8
+     2dc:	8b 7f       	andi	r24, 0xFB	; 251
+     2de:	80 93 b8 00 	sts	0x00B8, r24
+	RELAY_OFF(TargetRelayDown);
+     2e2:	80 91 a3 00 	lds	r24, 0x00A3
+     2e6:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+}
+     2ea:	df 91       	pop	r29
+     2ec:	cf 91       	pop	r28
+     2ee:	08 95       	ret
+
+000002f0 <TargetCare>:
+void
+TargetCare()
+{
+// Take care of the targets: they must not be both in the beam.
+	// Look at the first target
+	SELECT_TARGET1;
+     2f0:	80 91 ac 00 	lds	r24, 0x00AC
+     2f4:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     2f8:	80 91 a7 00 	lds	r24, 0x00A7
+     2fc:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+     300:	88 e8       	ldi	r24, 0x88	; 136
+     302:	93 e1       	ldi	r25, 0x13	; 19
+     304:	20 e9       	ldi	r18, 0x90	; 144
+     306:	31 e0       	ldi	r19, 0x01	; 1
+     308:	f9 01       	movw	r30, r18
+     30a:	31 97       	sbiw	r30, 0x01	; 1
+     30c:	f1 f7       	brne	.-4      	; 0x30a <TargetCare+0x1a>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+     30e:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+     310:	d9 f7       	brne	.-10     	; 0x308 <TargetCare+0x18>
+     312:	80 91 a7 00 	lds	r24, 0x00A7
+     316:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     31a:	a8 95       	wdr
+	
+	if(!IS_RELAY_ON(TargetLimitDown))
+     31c:	80 91 b4 00 	lds	r24, 0x00B4
+     320:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     324:	88 23       	and	r24, r24
+     326:	c1 f4       	brne	.+48     	; 0x358 <TargetCare+0x68>
+	{	// The first target is in the beam. Look at the second one.
+		SELECT_TARGET2;
+     328:	80 91 a7 00 	lds	r24, 0x00A7
+     32c:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     330:	80 91 ac 00 	lds	r24, 0x00AC
+     334:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+     338:	88 e8       	ldi	r24, 0x88	; 136
+     33a:	93 e1       	ldi	r25, 0x13	; 19
+     33c:	20 e9       	ldi	r18, 0x90	; 144
+     33e:	31 e0       	ldi	r19, 0x01	; 1
+     340:	f9 01       	movw	r30, r18
+     342:	31 97       	sbiw	r30, 0x01	; 1
+     344:	f1 f7       	brne	.-4      	; 0x342 <TargetCare+0x52>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+     346:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+     348:	d9 f7       	brne	.-10     	; 0x340 <TargetCare+0x50>
+     34a:	80 91 ac 00 	lds	r24, 0x00AC
+     34e:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     352:	a8 95       	wdr
+		MoveTargetOut();
+     354:	0e 94 20 01 	call	0x240	; 0x240 <MoveTargetOut>
+     358:	08 95       	ret
+
+0000035a <Algorithm>:
+}
+//---------------------------------------------------------------------------
+
+void 
+Algorithm()
+{
+     35a:	0f 93       	push	r16
+     35c:	1f 93       	push	r17
+     35e:	cf 93       	push	r28
+     360:	df 93       	push	r29
+ */
+
+uint16_t i;
+	i = 0;
+
+	TargetCurrent = IS_RELAY_ON(TargetActual);
+     362:	80 91 b5 00 	lds	r24, 0x00B5
+     366:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     36a:	80 93 9a 00 	sts	0x009A, r24
+	if(TimerBeep == TIMER_FLAG) TimerBeep  = 0;  // Reset timer
+     36e:	80 91 9d 00 	lds	r24, 0x009D
+     372:	90 91 9e 00 	lds	r25, 0x009E
+     376:	a0 91 9f 00 	lds	r26, 0x009F
+     37a:	b0 91 a0 00 	lds	r27, 0x00A0
+     37e:	8f 5f       	subi	r24, 0xFF	; 255
+     380:	9f 4f       	sbci	r25, 0xFF	; 255
+     382:	af 4f       	sbci	r26, 0xFF	; 255
+     384:	bf 4f       	sbci	r27, 0xFF	; 255
+     386:	41 f4       	brne	.+16     	; 0x398 <Algorithm+0x3e>
+     388:	10 92 9d 00 	sts	0x009D, r1
+     38c:	10 92 9e 00 	sts	0x009E, r1
+     390:	10 92 9f 00 	sts	0x009F, r1
+     394:	10 92 a0 00 	sts	0x00A0, r1
+	
+	if(IS_RELAY_ON(ManualAuto)) { // we are in manual mode
+     398:	80 91 9b 00 	lds	r24, 0x009B
+     39c:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     3a0:	88 23       	and	r24, r24
+     3a2:	51 f1       	breq	.+84     	; 0x3f8 <Algorithm+0x9e>
+		TargetRequested = TargetCurrent;
+     3a4:	80 91 9a 00 	lds	r24, 0x009A
+     3a8:	80 93 b7 00 	sts	0x00B7, r24
+		Urequested = Uadc;
+     3ac:	80 91 a8 00 	lds	r24, 0x00A8
+     3b0:	90 91 a9 00 	lds	r25, 0x00A9
+     3b4:	90 93 a5 00 	sts	0x00A5, r25
+     3b8:	80 93 a4 00 	sts	0x00A4, r24
+		FilterCurrent = GET_CURRENT_FILTER;
+     3bc:	80 91 a1 00 	lds	r24, 0x00A1
+     3c0:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     3c4:	18 2f       	mov	r17, r24
+     3c6:	80 91 b3 00 	lds	r24, 0x00B3
+     3ca:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     3ce:	88 0f       	add	r24, r24
+     3d0:	81 0f       	add	r24, r17
+     3d2:	80 93 b6 00 	sts	0x00B6, r24
+		if(FilterCurrent < 3 )
+     3d6:	83 30       	cpi	r24, 0x03	; 3
+     3d8:	18 f4       	brcc	.+6      	; 0x3e0 <Algorithm+0x86>
+		{
+			FilterRequested = FilterCurrent-1;
+     3da:	81 50       	subi	r24, 0x01	; 1
+     3dc:	80 93 b2 00 	sts	0x00B2, r24
+		}
+		ItWasManual = 1;
+     3e0:	81 e0       	ldi	r24, 0x01	; 1
+     3e2:	80 93 9c 00 	sts	0x009C, r24
+		RELAY_OFF(TargetRelayUp);
+     3e6:	80 91 b1 00 	lds	r24, 0x00B1
+     3ea:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+		RELAY_OFF(TargetRelayDown);
+     3ee:	80 91 a3 00 	lds	r24, 0x00A3
+     3f2:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     3f6:	6e c1       	rjmp	.+732    	; 0x6d4 <__stack+0x275>
+		RELAY_OFF(FilterRelayIn);
+		RELAY_OFF(FilterRelayOut);
+		return; // Do nothing 
+	}
+	
+	if(ItWasManual)
+     3f8:	80 91 9c 00 	lds	r24, 0x009C
+     3fc:	88 23       	and	r24, r24
+     3fe:	e1 f0       	breq	.+56     	; 0x438 <Algorithm+0xde>
+	{
+		TargetCare();
+     400:	0e 94 78 01 	call	0x2f0	; 0x2f0 <TargetCare>
+		ItWasManual = 0;
+     404:	10 92 9c 00 	sts	0x009C, r1
+		TargetCurrent = IS_RELAY_ON(TargetActual);
+     408:	80 91 b5 00 	lds	r24, 0x00B5
+     40c:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     410:	80 93 9a 00 	sts	0x009A, r24
+		FilterCurrent = GET_CURRENT_FILTER;
+     414:	80 91 a1 00 	lds	r24, 0x00A1
+     418:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     41c:	18 2f       	mov	r17, r24
+     41e:	80 91 b3 00 	lds	r24, 0x00B3
+     422:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     426:	88 0f       	add	r24, r24
+     428:	81 0f       	add	r24, r17
+     42a:	80 93 b6 00 	sts	0x00B6, r24
+		if(FilterCurrent < 3 )
+     42e:	83 30       	cpi	r24, 0x03	; 3
+     430:	18 f4       	brcc	.+6      	; 0x438 <Algorithm+0xde>
+		{
+			FilterRequested = FilterCurrent-1;
+     432:	81 50       	subi	r24, 0x01	; 1
+     434:	80 93 b2 00 	sts	0x00B2, r24
+		}
+	}
+		
+	if(TargetCurrent != TargetRequested) {
+     438:	90 91 9a 00 	lds	r25, 0x009A
+     43c:	80 91 b7 00 	lds	r24, 0x00B7
+     440:	98 17       	cp	r25, r24
+     442:	09 f4       	brne	.+2      	; 0x446 <Algorithm+0xec>
+     444:	72 c0       	rjmp	.+228    	; 0x52a <__stack+0xcb>
+		
+		// Move current target out of the beam
+		MoveTargetOut();
+     446:	0e 94 20 01 	call	0x240	; 0x240 <MoveTargetOut>
+		
+		// Change target
+		if(TargetRequested == 0) {SELECT_TARGET1;}
+     44a:	80 91 b7 00 	lds	r24, 0x00B7
+     44e:	88 23       	and	r24, r24
+     450:	b9 f4       	brne	.+46     	; 0x480 <__stack+0x21>
+     452:	80 91 ac 00 	lds	r24, 0x00AC
+     456:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     45a:	80 91 a7 00 	lds	r24, 0x00A7
+     45e:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+     462:	88 e8       	ldi	r24, 0x88	; 136
+     464:	93 e1       	ldi	r25, 0x13	; 19
+     466:	20 e9       	ldi	r18, 0x90	; 144
+     468:	31 e0       	ldi	r19, 0x01	; 1
+     46a:	f9 01       	movw	r30, r18
+     46c:	31 97       	sbiw	r30, 0x01	; 1
+     46e:	f1 f7       	brne	.-4      	; 0x46c <__stack+0xd>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+     470:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+     472:	d9 f7       	brne	.-10     	; 0x46a <__stack+0xb>
+     474:	80 91 a7 00 	lds	r24, 0x00A7
+     478:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     47c:	a8 95       	wdr
+     47e:	16 c0       	rjmp	.+44     	; 0x4ac <__stack+0x4d>
+		else {SELECT_TARGET2;}
+     480:	80 91 a7 00 	lds	r24, 0x00A7
+     484:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     488:	80 91 ac 00 	lds	r24, 0x00AC
+     48c:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+     490:	88 e8       	ldi	r24, 0x88	; 136
+     492:	93 e1       	ldi	r25, 0x13	; 19
+     494:	20 e9       	ldi	r18, 0x90	; 144
+     496:	31 e0       	ldi	r19, 0x01	; 1
+     498:	f9 01       	movw	r30, r18
+     49a:	31 97       	sbiw	r30, 0x01	; 1
+     49c:	f1 f7       	brne	.-4      	; 0x49a <__stack+0x3b>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+     49e:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+     4a0:	d9 f7       	brne	.-10     	; 0x498 <__stack+0x39>
+     4a2:	80 91 ac 00 	lds	r24, 0x00AC
+     4a6:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     4aa:	a8 95       	wdr
+     4ac:	c0 e0       	ldi	r28, 0x00	; 0
+     4ae:	d0 e0       	ldi	r29, 0x00	; 0
+     4b0:	00 e9       	ldi	r16, 0x90	; 144
+     4b2:	11 e0       	ldi	r17, 0x01	; 1
+		
+		i = 0;
+		while(1) 
+		{
+			TargetCurrent = IS_RELAY_ON(TargetActual);
+     4b4:	80 91 b5 00 	lds	r24, 0x00B5
+     4b8:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     4bc:	80 93 9a 00 	sts	0x009A, r24
+			if(TargetCurrent == TargetRequested) break;
+     4c0:	90 91 b7 00 	lds	r25, 0x00B7
+     4c4:	89 17       	cp	r24, r25
+     4c6:	69 f0       	breq	.+26     	; 0x4e2 <__stack+0x83>
+			if(i++ == 3) {
+     4c8:	c3 30       	cpi	r28, 0x03	; 3
+     4ca:	d1 05       	cpc	r29, r1
+     4cc:	09 f4       	brne	.+2      	; 0x4d0 <__stack+0x71>
+     4ce:	ac c0       	rjmp	.+344    	; 0x628 <__stack+0x1c9>
+				SET_TIMER(TimerBeep, ONE_SECOND);
+     4d0:	88 e8       	ldi	r24, 0x88	; 136
+     4d2:	93 e1       	ldi	r25, 0x13	; 19
+     4d4:	f8 01       	movw	r30, r16
+     4d6:	31 97       	sbiw	r30, 0x01	; 1
+     4d8:	f1 f7       	brne	.-4      	; 0x4d6 <__stack+0x77>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+     4da:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+     4dc:	d9 f7       	brne	.-10     	; 0x4d4 <__stack+0x75>
+		i = 0;
+		while(1) 
+		{
+			TargetCurrent = IS_RELAY_ON(TargetActual);
+			if(TargetCurrent == TargetRequested) break;
+			if(i++ == 3) {
+     4de:	21 96       	adiw	r28, 0x01	; 1
+     4e0:	e9 cf       	rjmp	.-46     	; 0x4b4 <__stack+0x55>
+     4e2:	20 e0       	ldi	r18, 0x00	; 0
+     4e4:	30 e0       	ldi	r19, 0x00	; 0
+				return;
+			}
+			_delay_ms(500.);   // wait for 500 miliseconds to allow target switching
+		} 
+		for(i=0; i<3; i++) {  		// Get coordinate (and do it three times for sure)
+			ADCSRA |= _BV(ADIE);  	// allow ADC interrupt (if it is not allowed for some reason)
+     4e6:	33 9a       	sbi	0x06, 3	; 6
+			ADCSRA |= _BV(ADSC);  	// start ADC conversion cycle 
+     4e8:	36 9a       	sbi	0x06, 6	; 6
+     4ea:	07 c0       	rjmp	.+14     	; 0x4fa <__stack+0x9b>
+			while(!intflags.adc_int) sleep_mode();
+     4ec:	85 b7       	in	r24, 0x35	; 53
+     4ee:	80 64       	ori	r24, 0x40	; 64
+     4f0:	85 bf       	out	0x35, r24	; 53
+     4f2:	88 95       	sleep
+     4f4:	85 b7       	in	r24, 0x35	; 53
+     4f6:	8f 7b       	andi	r24, 0xBF	; 191
+     4f8:	85 bf       	out	0x35, r24	; 53
+     4fa:	80 91 b8 00 	lds	r24, 0x00B8
+     4fe:	81 ff       	sbrs	r24, 1
+     500:	f5 cf       	rjmp	.-22     	; 0x4ec <__stack+0x8d>
+			intflags.adc_int = 0;
+     502:	80 91 b8 00 	lds	r24, 0x00B8
+     506:	8d 7f       	andi	r24, 0xFD	; 253
+     508:	80 93 b8 00 	sts	0x00B8, r24
+			intflags.tmr_int = 0;
+     50c:	80 91 b8 00 	lds	r24, 0x00B8
+     510:	8e 7f       	andi	r24, 0xFE	; 254
+     512:	80 93 b8 00 	sts	0x00B8, r24
+			intflags.rx_int = 0;  // alas! the device will loose a message if any.
+     516:	80 91 b8 00 	lds	r24, 0x00B8
+     51a:	8b 7f       	andi	r24, 0xFB	; 251
+     51c:	80 93 b8 00 	sts	0x00B8, r24
+				SET_TIMER(TimerBeep, ONE_SECOND);
+				return;
+			}
+			_delay_ms(500.);   // wait for 500 miliseconds to allow target switching
+		} 
+		for(i=0; i<3; i++) {  		// Get coordinate (and do it three times for sure)
+     520:	2f 5f       	subi	r18, 0xFF	; 255
+     522:	3f 4f       	sbci	r19, 0xFF	; 255
+     524:	23 30       	cpi	r18, 0x03	; 3
+     526:	31 05       	cpc	r19, r1
+     528:	f1 f6       	brne	.-68     	; 0x4e6 <__stack+0x87>
+			intflags.tmr_int = 0;
+			intflags.rx_int = 0;  // alas! the device will loose a message if any.
+		}
+	}  // end of target switching
+	
+	if(IsFlashing)
+     52a:	80 91 a6 00 	lds	r24, 0x00A6
+     52e:	88 23       	and	r24, r24
+     530:	09 f4       	brne	.+2      	; 0x534 <__stack+0xd5>
+     532:	6a c0       	rjmp	.+212    	; 0x608 <__stack+0x1a9>
+	{
+		if(Urequested < TOLERANCE) 
+     534:	20 91 a4 00 	lds	r18, 0x00A4
+     538:	30 91 a5 00 	lds	r19, 0x00A5
+     53c:	24 30       	cpi	r18, 0x04	; 4
+     53e:	31 05       	cpc	r19, r1
+     540:	98 f4       	brcc	.+38     	; 0x568 <__stack+0x109>
+		{
+			if(	!IS_RELAY_ON(TargetLimitDown) // Check limit switch state
+     542:	80 91 b4 00 	lds	r24, 0x00B4
+     546:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     54a:	88 23       	and	r24, r24
+     54c:	49 f5       	brne	.+82     	; 0x5a0 <__stack+0x141>
+     54e:	80 91 a8 00 	lds	r24, 0x00A8
+     552:	90 91 a9 00 	lds	r25, 0x00A9
+     556:	05 97       	sbiw	r24, 0x05	; 5
+     558:	18 f1       	brcs	.+70     	; 0x5a0 <__stack+0x141>
+				&& (Uadc > TOLERANCE) ) 
+			{
+				RELAY_OFF(TargetRelayUp); 
+     55a:	80 91 b1 00 	lds	r24, 0x00B1
+     55e:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+				RELAY_ON(TargetRelayDown);
+     562:	80 91 a3 00 	lds	r24, 0x00A3
+     566:	15 c0       	rjmp	.+42     	; 0x592 <__stack+0x133>
+			}
+		} 
+		else
+		{
+			if(Uadc < (Urequested - TOLERANCE) 
+     568:	80 91 a8 00 	lds	r24, 0x00A8
+     56c:	90 91 a9 00 	lds	r25, 0x00A9
+     570:	24 50       	subi	r18, 0x04	; 4
+     572:	30 40       	sbci	r19, 0x00	; 0
+     574:	82 17       	cp	r24, r18
+     576:	93 07       	cpc	r25, r19
+     578:	78 f4       	brcc	.+30     	; 0x598 <__stack+0x139>
+     57a:	80 91 a2 00 	lds	r24, 0x00A2
+     57e:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     582:	88 23       	and	r24, r24
+     584:	49 f4       	brne	.+18     	; 0x598 <__stack+0x139>
+				&& (!IS_RELAY_ON(TargetLimitUp)) ) // Check limit switch state
+			{ 
+				RELAY_OFF(TargetRelayDown); 
+     586:	80 91 a3 00 	lds	r24, 0x00A3
+     58a:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+				RELAY_ON(TargetRelayUp);
+     58e:	80 91 b1 00 	lds	r24, 0x00B1
+     592:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+     596:	04 c0       	rjmp	.+8      	; 0x5a0 <__stack+0x141>
+			}
+			else
+			{
+				RELAY_OFF(TargetRelayUp); 
+     598:	80 91 b1 00 	lds	r24, 0x00B1
+     59c:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+			}
+		}
+	
+		if(Uadc > (Urequested + TOLERANCE)) 
+     5a0:	20 91 a8 00 	lds	r18, 0x00A8
+     5a4:	30 91 a9 00 	lds	r19, 0x00A9
+     5a8:	80 91 a4 00 	lds	r24, 0x00A4
+     5ac:	90 91 a5 00 	lds	r25, 0x00A5
+     5b0:	04 96       	adiw	r24, 0x04	; 4
+     5b2:	82 17       	cp	r24, r18
+     5b4:	93 07       	cpc	r25, r19
+     5b6:	98 f4       	brcc	.+38     	; 0x5de <__stack+0x17f>
+		{
+			if(	!IS_RELAY_ON(TargetLimitDown)) // Check limit switch state
+     5b8:	80 91 b4 00 	lds	r24, 0x00B4
+     5bc:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     5c0:	88 23       	and	r24, r24
+     5c2:	49 f4       	brne	.+18     	; 0x5d6 <__stack+0x177>
+			{
+				RELAY_OFF(TargetRelayUp); 
+     5c4:	80 91 b1 00 	lds	r24, 0x00B1
+     5c8:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+				RELAY_ON(TargetRelayDown);
+     5cc:	80 91 a3 00 	lds	r24, 0x00A3
+     5d0:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+     5d4:	04 c0       	rjmp	.+8      	; 0x5de <__stack+0x17f>
+			}
+			else
+			{
+				RELAY_OFF(TargetRelayDown); 
+     5d6:	80 91 a3 00 	lds	r24, 0x00A3
+     5da:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+			}
+		}
+
+// Check if we are at the requested position
+		if(Uadc == Urequested)
+     5de:	20 91 a8 00 	lds	r18, 0x00A8
+     5e2:	30 91 a9 00 	lds	r19, 0x00A9
+     5e6:	80 91 a4 00 	lds	r24, 0x00A4
+     5ea:	90 91 a5 00 	lds	r25, 0x00A5
+     5ee:	28 17       	cp	r18, r24
+     5f0:	39 07       	cpc	r19, r25
+     5f2:	51 f4       	brne	.+20     	; 0x608 <__stack+0x1a9>
+		{
+			RELAY_OFF(TargetRelayUp); 
+     5f4:	80 91 b1 00 	lds	r24, 0x00B1
+     5f8:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+			RELAY_OFF(TargetRelayDown);
+     5fc:	80 91 a3 00 	lds	r24, 0x00A3
+     600:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+			IsFlashing = 0;
+     604:	10 92 a6 00 	sts	0x00A6, r1
+		}
+	}
+	
+// Filter ON / OFF handling
+	FilterCurrent = GET_CURRENT_FILTER;
+     608:	80 91 a1 00 	lds	r24, 0x00A1
+     60c:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     610:	18 2f       	mov	r17, r24
+     612:	80 91 b3 00 	lds	r24, 0x00B3
+     616:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     61a:	28 2f       	mov	r18, r24
+     61c:	22 0f       	add	r18, r18
+     61e:	21 0f       	add	r18, r17
+     620:	20 93 b6 00 	sts	0x00B6, r18
+	if(FilterCurrent > 2 )
+     624:	23 30       	cpi	r18, 0x03	; 3
+     626:	10 f1       	brcs	.+68     	; 0x66c <__stack+0x20d>
+	{
+		SET_TIMER(TimerBeep, ONE_SECOND); // Beep the error
+     628:	80 91 9d 00 	lds	r24, 0x009D
+     62c:	90 91 9e 00 	lds	r25, 0x009E
+     630:	a0 91 9f 00 	lds	r26, 0x009F
+     634:	b0 91 a0 00 	lds	r27, 0x00A0
+     638:	00 97       	sbiw	r24, 0x00	; 0
+     63a:	a1 05       	cpc	r26, r1
+     63c:	b1 05       	cpc	r27, r1
+     63e:	09 f0       	breq	.+2      	; 0x642 <__stack+0x1e3>
+     640:	51 c0       	rjmp	.+162    	; 0x6e4 <__stack+0x285>
+     642:	80 91 ad 00 	lds	r24, 0x00AD
+     646:	90 91 ae 00 	lds	r25, 0x00AE
+     64a:	a0 91 af 00 	lds	r26, 0x00AF
+     64e:	b0 91 b0 00 	lds	r27, 0x00B0
+     652:	80 53       	subi	r24, 0x30	; 48
+     654:	9f 4d       	sbci	r25, 0xDF	; 223
+     656:	af 4f       	sbci	r26, 0xFF	; 255
+     658:	bf 4f       	sbci	r27, 0xFF	; 255
+     65a:	80 93 9d 00 	sts	0x009D, r24
+     65e:	90 93 9e 00 	sts	0x009E, r25
+     662:	a0 93 9f 00 	sts	0x009F, r26
+     666:	b0 93 a0 00 	sts	0x00A0, r27
+     66a:	3c c0       	rjmp	.+120    	; 0x6e4 <__stack+0x285>
+		return;
+	}
+	
+	if(FilterCurrent != (FilterRequested+1)) {
+     66c:	40 91 b2 00 	lds	r20, 0x00B2
+     670:	30 e0       	ldi	r19, 0x00	; 0
+     672:	84 2f       	mov	r24, r20
+     674:	90 e0       	ldi	r25, 0x00	; 0
+     676:	01 96       	adiw	r24, 0x01	; 1
+     678:	28 17       	cp	r18, r24
+     67a:	39 07       	cpc	r19, r25
+     67c:	59 f1       	breq	.+86     	; 0x6d4 <__stack+0x275>
+		if(FilterRequested == 0) {
+     67e:	44 23       	and	r20, r20
+     680:	99 f4       	brne	.+38     	; 0x6a8 <__stack+0x249>
+			RELAY_OFF(FilterRelayIn);
+     682:	80 91 aa 00 	lds	r24, 0x00AA
+     686:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+			if(IS_RELAY_ON(FilterLimitOut)) {
+     68a:	80 91 a1 00 	lds	r24, 0x00A1
+     68e:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     692:	88 23       	and	r24, r24
+     694:	29 f0       	breq	.+10     	; 0x6a0 <__stack+0x241>
+				RELAY_OFF(FilterRelayOut);
+     696:	80 91 99 00 	lds	r24, 0x0099
+     69a:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+     69e:	04 c0       	rjmp	.+8      	; 0x6a8 <__stack+0x249>
+			} else {
+				RELAY_ON(FilterRelayOut);
+     6a0:	80 91 99 00 	lds	r24, 0x0099
+     6a4:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+			}
+		}
+		if(FilterRequested == 1) {
+     6a8:	80 91 b2 00 	lds	r24, 0x00B2
+     6ac:	81 30       	cpi	r24, 0x01	; 1
+     6ae:	d1 f4       	brne	.+52     	; 0x6e4 <__stack+0x285>
+			RELAY_OFF(FilterRelayOut);
+     6b0:	80 91 99 00 	lds	r24, 0x0099
+     6b4:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+			if(IS_RELAY_ON(FilterLimitIn)) {
+     6b8:	80 91 b3 00 	lds	r24, 0x00B3
+     6bc:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     6c0:	88 23       	and	r24, r24
+     6c2:	19 f0       	breq	.+6      	; 0x6ca <__stack+0x26b>
+				RELAY_OFF(FilterRelayIn);
+     6c4:	80 91 aa 00 	lds	r24, 0x00AA
+     6c8:	0b c0       	rjmp	.+22     	; 0x6e0 <__stack+0x281>
+			} else {
+				RELAY_ON(FilterRelayIn);
+     6ca:	80 91 aa 00 	lds	r24, 0x00AA
+     6ce:	0e 94 7f 00 	call	0xfe	; 0xfe <RELAY_ON>
+     6d2:	08 c0       	rjmp	.+16     	; 0x6e4 <__stack+0x285>
+			}
+		}
+	}
+	else
+	{
+				RELAY_OFF(FilterRelayIn);
+     6d4:	80 91 aa 00 	lds	r24, 0x00AA
+     6d8:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+				RELAY_OFF(FilterRelayOut);
+     6dc:	80 91 99 00 	lds	r24, 0x0099
+     6e0:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+	}
+}
+     6e4:	df 91       	pop	r29
+     6e6:	cf 91       	pop	r28
+     6e8:	1f 91       	pop	r17
+     6ea:	0f 91       	pop	r16
+     6ec:	08 95       	ret
+
+000006ee <uchar2h>:
+
+char* uchar2h(uint8_t i)
+{
+   static char buf[3];
+   const char code[16]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+   buf[1] = code[i&0xf];
+     6ee:	98 2f       	mov	r25, r24
+     6f0:	9f 70       	andi	r25, 0x0F	; 15
+     6f2:	a6 e8       	ldi	r26, 0x86	; 134
+     6f4:	b0 e0       	ldi	r27, 0x00	; 0
+     6f6:	fd 01       	movw	r30, r26
+     6f8:	e9 0f       	add	r30, r25
+     6fa:	f1 1d       	adc	r31, r1
+     6fc:	90 81       	ld	r25, Z
+     6fe:	90 93 97 00 	sts	0x0097, r25
+   buf[0] = code[i>>4];
+     702:	e7 e9       	ldi	r30, 0x97	; 151
+     704:	f0 e0       	ldi	r31, 0x00	; 0
+     706:	82 95       	swap	r24
+     708:	8f 70       	andi	r24, 0x0F	; 15
+     70a:	a8 0f       	add	r26, r24
+     70c:	b1 1d       	adc	r27, r1
+     70e:	8c 91       	ld	r24, X
+     710:	82 93       	st	-Z, r24
+   buf[2] = 0;
+     712:	10 92 98 00 	sts	0x0098, r1
+   return buf;
+}
+     716:	cf 01       	movw	r24, r30
+     718:	08 95       	ret
+
+0000071a <h2uchar>:
+//---------------------------------------------------------------------------
+
+uint8_t h2uchar(char *buf)
+{
+     71a:	fc 01       	movw	r30, r24
+   uint8_t r1,r2;
+   r1 = (buf[0]>='a'? buf[0]-('a'-'A'): buf[0]) -'0'; // to upper case
+     71c:	80 81       	ld	r24, Z
+     71e:	81 36       	cpi	r24, 0x61	; 97
+     720:	1c f0       	brlt	.+6      	; 0x728 <h2uchar+0xe>
+     722:	28 2f       	mov	r18, r24
+     724:	20 55       	subi	r18, 0x50	; 80
+     726:	02 c0       	rjmp	.+4      	; 0x72c <h2uchar+0x12>
+     728:	28 2f       	mov	r18, r24
+     72a:	20 53       	subi	r18, 0x30	; 48
+   r1 = r1>9 ? r1-('A'-'0')+10 : r1;
+     72c:	2a 30       	cpi	r18, 0x0A	; 10
+     72e:	08 f0       	brcs	.+2      	; 0x732 <h2uchar+0x18>
+     730:	27 50       	subi	r18, 0x07	; 7
+   r2 = (buf[1]>='a'? buf[1]-('a'-'A'): buf[1]) -'0'; // to upper case
+     732:	81 81       	ldd	r24, Z+1	; 0x01
+     734:	81 36       	cpi	r24, 0x61	; 97
+     736:	14 f0       	brlt	.+4      	; 0x73c <h2uchar+0x22>
+     738:	80 55       	subi	r24, 0x50	; 80
+     73a:	01 c0       	rjmp	.+2      	; 0x73e <h2uchar+0x24>
+     73c:	80 53       	subi	r24, 0x30	; 48
+   r2 = r2>9 ? r2-('A'-'0')+10 : r2;
+     73e:	8a 30       	cpi	r24, 0x0A	; 10
+     740:	08 f0       	brcs	.+2      	; 0x744 <h2uchar+0x2a>
+     742:	87 50       	subi	r24, 0x07	; 7
+     744:	22 95       	swap	r18
+     746:	20 7f       	andi	r18, 0xF0	; 240
+     748:	28 2b       	or	r18, r24
+   return (r2 | (r1<<4)) -'0';
+}
+     74a:	82 2f       	mov	r24, r18
+     74c:	80 53       	subi	r24, 0x30	; 48
+     74e:	08 95       	ret
+
+00000750 <__vector_9>:
+//---------------------------------------------------------------------------
+
+/* Part 3: Interrupt service routines */
+
+ISR(TIMER0_OVF_vect)
+{
+     750:	1f 92       	push	r1
+     752:	0f 92       	push	r0
+     754:	0f b6       	in	r0, 0x3f	; 63
+     756:	0f 92       	push	r0
+     758:	11 24       	eor	r1, r1
+     75a:	2f 93       	push	r18
+     75c:	8f 93       	push	r24
+     75e:	9f 93       	push	r25
+     760:	af 93       	push	r26
+     762:	bf 93       	push	r27
+static uint16_t scaler = 1;
+
+	if (--scaler == 0)
+     764:	80 91 84 00 	lds	r24, 0x0084
+     768:	90 91 85 00 	lds	r25, 0x0085
+     76c:	01 97       	sbiw	r24, 0x01	; 1
+     76e:	90 93 85 00 	sts	0x0085, r25
+     772:	80 93 84 00 	sts	0x0084, r24
+     776:	89 2b       	or	r24, r25
+     778:	d1 f4       	brne	.+52     	; 0x7ae <__vector_9+0x5e>
+	{
+		scaler = 10;
+     77a:	8a e0       	ldi	r24, 0x0A	; 10
+     77c:	90 e0       	ldi	r25, 0x00	; 0
+     77e:	90 93 85 00 	sts	0x0085, r25
+     782:	80 93 84 00 	sts	0x0084, r24
+		if(TimerBeep && TimerBeep != TIMER_FLAG)  BEEPER_PORT ^= _BV(BEEPER_PIN);
+     786:	80 91 9d 00 	lds	r24, 0x009D
+     78a:	90 91 9e 00 	lds	r25, 0x009E
+     78e:	a0 91 9f 00 	lds	r26, 0x009F
+     792:	b0 91 a0 00 	lds	r27, 0x00A0
+     796:	01 97       	sbiw	r24, 0x01	; 1
+     798:	a1 09       	sbc	r26, r1
+     79a:	b1 09       	sbc	r27, r1
+     79c:	8e 5f       	subi	r24, 0xFE	; 254
+     79e:	9f 4f       	sbci	r25, 0xFF	; 255
+     7a0:	af 4f       	sbci	r26, 0xFF	; 255
+     7a2:	bf 4f       	sbci	r27, 0xFF	; 255
+     7a4:	20 f4       	brcc	.+8      	; 0x7ae <__vector_9+0x5e>
+     7a6:	85 b3       	in	r24, 0x15	; 21
+     7a8:	90 e2       	ldi	r25, 0x20	; 32
+     7aa:	89 27       	eor	r24, r25
+     7ac:	85 bb       	out	0x15, r24	; 21
+	}
+}
+     7ae:	bf 91       	pop	r27
+     7b0:	af 91       	pop	r26
+     7b2:	9f 91       	pop	r25
+     7b4:	8f 91       	pop	r24
+     7b6:	2f 91       	pop	r18
+     7b8:	0f 90       	pop	r0
+     7ba:	0f be       	out	0x3f, r0	; 63
+     7bc:	0f 90       	pop	r0
+     7be:	1f 90       	pop	r1
+     7c0:	18 95       	reti
+
+000007c2 <__vector_8>:
+//---------------------------------------------------------------------------
+
+ISR(TIMER1_OVF_vect)
+{
+     7c2:	1f 92       	push	r1
+     7c4:	0f 92       	push	r0
+     7c6:	0f b6       	in	r0, 0x3f	; 63
+     7c8:	0f 92       	push	r0
+     7ca:	11 24       	eor	r1, r1
+     7cc:	8f 93       	push	r24
+     7ce:	9f 93       	push	r25
+     7d0:	af 93       	push	r26
+     7d2:	bf 93       	push	r27
+static uint16_t scaler = 1;
+
+//	if(TimerBeep && TimerBeep != TIMER_FLAG)  BEEPER_PORT ^= _BV(BEEPER_PIN);
+	if (--scaler == 0)
+     7d4:	80 91 82 00 	lds	r24, 0x0082
+     7d8:	90 91 83 00 	lds	r25, 0x0083
+     7dc:	01 97       	sbiw	r24, 0x01	; 1
+     7de:	90 93 83 00 	sts	0x0083, r25
+     7e2:	80 93 82 00 	sts	0x0082, r24
+     7e6:	89 2b       	or	r24, r25
+     7e8:	59 f4       	brne	.+22     	; 0x800 <__vector_8+0x3e>
+	{
+		scaler = SYS_CLOCK;
+     7ea:	86 e4       	ldi	r24, 0x46	; 70
+     7ec:	90 e0       	ldi	r25, 0x00	; 0
+     7ee:	90 93 83 00 	sts	0x0083, r25
+     7f2:	80 93 82 00 	sts	0x0082, r24
+		intflags.tmr_int = 1;
+     7f6:	80 91 b8 00 	lds	r24, 0x00B8
+     7fa:	81 60       	ori	r24, 0x01	; 1
+     7fc:	80 93 b8 00 	sts	0x00B8, r24
+	}
+	systime++;
+     800:	80 91 ad 00 	lds	r24, 0x00AD
+     804:	90 91 ae 00 	lds	r25, 0x00AE
+     808:	a0 91 af 00 	lds	r26, 0x00AF
+     80c:	b0 91 b0 00 	lds	r27, 0x00B0
+     810:	01 96       	adiw	r24, 0x01	; 1
+     812:	a1 1d       	adc	r26, r1
+     814:	b1 1d       	adc	r27, r1
+     816:	80 93 ad 00 	sts	0x00AD, r24
+     81a:	90 93 ae 00 	sts	0x00AE, r25
+     81e:	a0 93 af 00 	sts	0x00AF, r26
+     822:	b0 93 b0 00 	sts	0x00B0, r27
+}
+     826:	bf 91       	pop	r27
+     828:	af 91       	pop	r26
+     82a:	9f 91       	pop	r25
+     82c:	8f 91       	pop	r24
+     82e:	0f 90       	pop	r0
+     830:	0f be       	out	0x3f, r0	; 63
+     832:	0f 90       	pop	r0
+     834:	1f 90       	pop	r1
+     836:	18 95       	reti
+
+00000838 <__vector_14>:
+/*
+ * ADC conversion complete.  Fetch the 10-bit value, and feed the
+ * PWM with it.
+ */
+ISR(ADC_vect)
+{
+     838:	1f 92       	push	r1
+     83a:	0f 92       	push	r0
+     83c:	0f b6       	in	r0, 0x3f	; 63
+     83e:	0f 92       	push	r0
+     840:	11 24       	eor	r1, r1
+     842:	8f 93       	push	r24
+     844:	9f 93       	push	r25
+  Uadc = ADCW;
+     846:	84 b1       	in	r24, 0x04	; 4
+     848:	95 b1       	in	r25, 0x05	; 5
+     84a:	90 93 a9 00 	sts	0x00A9, r25
+     84e:	80 93 a8 00 	sts	0x00A8, r24
+  ADCSRA &= ~_BV(ADIE);		/* disable ADC interrupt */
+     852:	33 98       	cbi	0x06, 3	; 6
+  intflags.adc_int = 1;
+     854:	80 91 b8 00 	lds	r24, 0x00B8
+     858:	82 60       	ori	r24, 0x02	; 2
+     85a:	80 93 b8 00 	sts	0x00B8, r24
+}
+     85e:	9f 91       	pop	r25
+     860:	8f 91       	pop	r24
+     862:	0f 90       	pop	r0
+     864:	0f be       	out	0x3f, r0	; 63
+     866:	0f 90       	pop	r0
+     868:	1f 90       	pop	r1
+     86a:	18 95       	reti
+
+0000086c <__vector_11>:
+ * UART receive interrupt.  Fetch the character received and buffer
+ * it, unless there was a framing error.  Note that the main loop
+ * checks the received character only once per 10 ms.
+ */
+ISR(USART_RXC_vect)
+{
+     86c:	1f 92       	push	r1
+     86e:	0f 92       	push	r0
+     870:	0f b6       	in	r0, 0x3f	; 63
+     872:	0f 92       	push	r0
+     874:	11 24       	eor	r1, r1
+     876:	8f 93       	push	r24
+  uint8_t c;
+
+  c = UDR;
+     878:	8c b1       	in	r24, 0x0c	; 12
+  if (bit_is_clear(UCSRA, FE))
+     87a:	5c 99       	sbic	0x0b, 4	; 11
+     87c:	07 c0       	rjmp	.+14     	; 0x88c <__vector_11+0x20>
+    {
+      rxbuff = c;
+     87e:	80 93 ab 00 	sts	0x00AB, r24
+      intflags.rx_int = 1;
+     882:	80 91 b8 00 	lds	r24, 0x00B8
+     886:	84 60       	ori	r24, 0x04	; 4
+     888:	80 93 b8 00 	sts	0x00B8, r24
+    }
+}
+     88c:	8f 91       	pop	r24
+     88e:	0f 90       	pop	r0
+     890:	0f be       	out	0x3f, r0	; 63
+     892:	0f 90       	pop	r0
+     894:	1f 90       	pop	r1
+     896:	18 95       	reti
+
+00000898 <putchr>:
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     898:	5d 9b       	sbis	0x0b, 5	; 11
+     89a:	fe cf       	rjmp	.-4      	; 0x898 <putchr>
+	UDR = c;
+     89c:	8c b9       	out	0x0c, r24	; 12
+}
+     89e:	08 95       	ret
+
+000008a0 <write_binary>:
+
+/*
+ * Send the fixed length buffer down the UART Tx.
+ */
+void write_binary(const char *s, uint8_t len)
+{
+     8a0:	fc 01       	movw	r30, r24
+     8a2:	06 c0       	rjmp	.+12     	; 0x8b0 <write_binary+0x10>
+  while (len--)  putchr(*s++);
+     8a4:	80 81       	ld	r24, Z
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     8a6:	5d 9b       	sbis	0x0b, 5	; 11
+     8a8:	fe cf       	rjmp	.-4      	; 0x8a6 <write_binary+0x6>
+/*
+ * Send the fixed length buffer down the UART Tx.
+ */
+void write_binary(const char *s, uint8_t len)
+{
+  while (len--)  putchr(*s++);
+     8aa:	31 96       	adiw	r30, 0x01	; 1
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+     8ac:	8c b9       	out	0x0c, r24	; 12
+     8ae:	61 50       	subi	r22, 0x01	; 1
+/*
+ * Send the fixed length buffer down the UART Tx.
+ */
+void write_binary(const char *s, uint8_t len)
+{
+  while (len--)  putchr(*s++);
+     8b0:	66 23       	and	r22, r22
+     8b2:	c1 f7       	brne	.-16     	; 0x8a4 <write_binary+0x4>
+}
+     8b4:	08 95       	ret
+
+000008b6 <printstr>:
+/*
+ * Send a C (NUL-terminated) string down the UART Tx.
+ */
+
+void printstr(const char *s)
+{
+     8b6:	fc 01       	movw	r30, r24
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+     8b8:	9d e0       	ldi	r25, 0x0D	; 13
+     8ba:	09 c0       	rjmp	.+18     	; 0x8ce <printstr+0x18>
+
+void printstr(const char *s)
+{
+  while (*s)
+    {
+      if (*s == '\n')
+     8bc:	8a 30       	cpi	r24, 0x0A	; 10
+     8be:	19 f4       	brne	.+6      	; 0x8c6 <printstr+0x10>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     8c0:	5d 9b       	sbis	0x0b, 5	; 11
+     8c2:	fe cf       	rjmp	.-4      	; 0x8c0 <printstr+0xa>
+	UDR = c;
+     8c4:	9c b9       	out	0x0c, r25	; 12
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     8c6:	5d 9b       	sbis	0x0b, 5	; 11
+     8c8:	fe cf       	rjmp	.-4      	; 0x8c6 <printstr+0x10>
+{
+  while (*s)
+    {
+      if (*s == '\n')
+		putchr('\r');
+      putchr(*s++);
+     8ca:	31 96       	adiw	r30, 0x01	; 1
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+     8cc:	8c b9       	out	0x0c, r24	; 12
+ * Send a C (NUL-terminated) string down the UART Tx.
+ */
+
+void printstr(const char *s)
+{
+  while (*s)
+     8ce:	80 81       	ld	r24, Z
+     8d0:	88 23       	and	r24, r24
+     8d2:	a1 f7       	brne	.-24     	; 0x8bc <printstr+0x6>
+    {
+      if (*s == '\n')
+		putchr('\r');
+      putchr(*s++);
+    }
+}
+     8d4:	08 95       	ret
+
+000008d6 <printstr_p>:
+/*
+ * Same as above, but the string is located in program memory,
+ * so "lpm" instructions are needed to fetch it.
+ */
+void printstr_p(const char *s)
+{
+     8d6:	fc 01       	movw	r30, r24
+  char c;
+
+  for (c = pgm_read_byte(s); c; ++s, c = pgm_read_byte(s))
+     8d8:	84 91       	lpm	r24, Z+
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+     8da:	9d e0       	ldi	r25, 0x0D	; 13
+     8dc:	0a c0       	rjmp	.+20     	; 0x8f2 <printstr_p+0x1c>
+{
+  char c;
+
+  for (c = pgm_read_byte(s); c; ++s, c = pgm_read_byte(s))
+    {
+      if (c == '\n')
+     8de:	8a 30       	cpi	r24, 0x0A	; 10
+     8e0:	19 f4       	brne	.+6      	; 0x8e8 <printstr_p+0x12>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     8e2:	5d 9b       	sbis	0x0b, 5	; 11
+     8e4:	fe cf       	rjmp	.-4      	; 0x8e2 <printstr_p+0xc>
+	UDR = c;
+     8e6:	9c b9       	out	0x0c, r25	; 12
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     8e8:	5d 9b       	sbis	0x0b, 5	; 11
+     8ea:	fe cf       	rjmp	.-4      	; 0x8e8 <printstr_p+0x12>
+	UDR = c;
+     8ec:	8c b9       	out	0x0c, r24	; 12
+ */
+void printstr_p(const char *s)
+{
+  char c;
+
+  for (c = pgm_read_byte(s); c; ++s, c = pgm_read_byte(s))
+     8ee:	31 96       	adiw	r30, 0x01	; 1
+     8f0:	84 91       	lpm	r24, Z+
+     8f2:	88 23       	and	r24, r24
+     8f4:	a1 f7       	brne	.-24     	; 0x8de <printstr_p+0x8>
+    {
+      if (c == '\n')
+			putchr('\r');
+      putchr(c);
+    }
+}
+     8f6:	08 95       	ret
+
+000008f8 <ioinit>:
+
+/*
+ * Do all the startup-time peripheral initializations.
+ */
+void ioinit(void)
+{
+     8f8:	1f 93       	push	r17
+//  Reset all global variables here
+	TimerBeep = 0;
+     8fa:	10 92 9d 00 	sts	0x009D, r1
+     8fe:	10 92 9e 00 	sts	0x009E, r1
+     902:	10 92 9f 00 	sts	0x009F, r1
+     906:	10 92 a0 00 	sts	0x00A0, r1
+	Urequested = 0;
+     90a:	10 92 a5 00 	sts	0x00A5, r1
+     90e:	10 92 a4 00 	sts	0x00A4, r1
+	FilterRequested = 0;
+     912:	10 92 b2 00 	sts	0x00B2, r1
+	IsFlashing = 0;
+     916:	10 92 a6 00 	sts	0x00A6, r1
+	ItWasManual = 1;
+     91a:	11 e0       	ldi	r17, 0x01	; 1
+     91c:	10 93 9c 00 	sts	0x009C, r17
+	systime = 0;
+     920:	10 92 ad 00 	sts	0x00AD, r1
+     924:	10 92 ae 00 	sts	0x00AE, r1
+     928:	10 92 af 00 	sts	0x00AF, r1
+     92c:	10 92 b0 00 	sts	0x00B0, r1
+	rxbuff = 0;
+     930:	10 92 ab 00 	sts	0x00AB, r1
+
+/*  
+ *	Disable external interrupts from port pins
+ */
+	GICR &= 0x1F; // disable INT0, Int1 and INT2
+     934:	8b b7       	in	r24, 0x3b	; 59
+     936:	8f 71       	andi	r24, 0x1F	; 31
+     938:	8b bf       	out	0x3b, r24	; 59
+   * Timer 1 will be set up as a 16-bit in the normal mode (e.g. runs from 0 to 0xFFFF). 
+   * OC1A and OC1B pins are disconnected.
+   * The timer will run on MCU clock.
+   */
+  //TCCR1A = 3;
+  TCCR1A = _BV(WGM10) | _BV(WGM11) ;
+     93a:	93 e0       	ldi	r25, 0x03	; 3
+     93c:	9f bd       	out	0x2f, r25	; 47
+  TCCR1B = 1; //1-no prescaling; 2- clck/8; 3-clk/64; 4-clk/256; 5-clk/1024
+     93e:	1e bd       	out	0x2e, r17	; 46
+
+  //OCR1A = 0x0fff;			/* set TOP value */
+
+	TCCR0 = 2; //1-no prescaling; 2- clck/8; 3-clk/64; 4-clk/256; 5-clk/1024
+     940:	22 e0       	ldi	r18, 0x02	; 2
+     942:	23 bf       	out	0x33, r18	; 51
+   * Enable Port D outputs: PD6 for the clock output, PD7 for the LED
+   * flasher.  PD1 is UART TxD but not DDRD setting is provided for
+   * that, as enabling the UART transmitter will automatically turn
+   * this pin into an output.
+   */
+  CONTROL_DDR = _BV(CONTROL_PIN);
+     944:	80 e8       	ldi	r24, 0x80	; 128
+     946:	81 bb       	out	0x11, r24	; 17
+  BEEPER_DDR = _BV(BEEPER_PIN);
+     948:	30 e2       	ldi	r19, 0x20	; 32
+     94a:	34 bb       	out	0x14, r19	; 20
+
+ 
+ // UCSRA = _BV(U2X);		/* improves baud rate error @ F_CPU = 1 MHz */
+	UCSRB = _BV(TXEN)|_BV(RXEN)|_BV(RXCIE); /* tx/rx enable, rx complete intr */
+     94c:	88 e9       	ldi	r24, 0x98	; 152
+     94e:	8a b9       	out	0x0a, r24	; 10
+uart_set_baud(void)
+{
+   #define BAUD 115200
+   #define BAUD_TOL 2
+   #include <util/setbaud.h>
+   UBRRH = UBRRH_VALUE;
+     950:	10 bc       	out	0x20, r1	; 32
+   UBRRL = UBRRL_VALUE;
+     952:	80 e1       	ldi	r24, 0x10	; 16
+     954:	89 b9       	out	0x09, r24	; 9
+   #if USE_2X
+   UCSRA |= (1 << U2X);
+     956:	59 9a       	sbi	0x0b, 1	; 11
+	
+#if HAVE_ADC
+	/* 
+	 *Measured voltage is supplied on (PA3) ADC3 
+	 */
+	ADMUX = _BV(MUX0) | _BV(MUX1);
+     958:	97 b9       	out	0x07, r25	; 7
+	/*
+	 * Select automatic conversion on Timer1 Compare match B
+	 */
+	SFIOR |= _BV(ADTS2) | _BV(ADTS0);
+     95a:	80 b7       	in	r24, 0x30	; 48
+     95c:	80 6a       	ori	r24, 0xA0	; 160
+     95e:	80 bf       	out	0x30, r24	; 48
+	
+  /*
+   * enable ADC, select ADC clock = F_CPU / 128 (i.e. 125 kHz)
+   */
+	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0);
+     960:	87 e8       	ldi	r24, 0x87	; 135
+     962:	86 b9       	out	0x06, r24	; 6
+#endif
+
+// Pin configuration
+//  SET_RELAY_CONFIG(Relay,         Port, Pin, ENABLE) 
+	SET_RELAY_CONFIG(TargetRelayUp   ,'B' ,2   ,1  );
+     964:	8a e1       	ldi	r24, 0x1A	; 26
+     966:	80 93 b1 00 	sts	0x00B1, r24
+     96a:	ba 9a       	sbi	0x17, 2	; 23
+	SET_RELAY_CONFIG(TargetRelayDown ,'B' ,3   ,1  );
+     96c:	8b e1       	ldi	r24, 0x1B	; 27
+     96e:	80 93 a3 00 	sts	0x00A3, r24
+     972:	bb 9a       	sbi	0x17, 3	; 23
+	SET_RELAY_CONFIG(FilterRelayIn   ,'B' ,0   ,1  );
+     974:	88 e1       	ldi	r24, 0x18	; 24
+     976:	80 93 aa 00 	sts	0x00AA, r24
+     97a:	b8 9a       	sbi	0x17, 0	; 23
+	SET_RELAY_CONFIG(FilterRelayOut  ,'B' ,1   ,1  );
+     97c:	89 e1       	ldi	r24, 0x19	; 25
+     97e:	80 93 99 00 	sts	0x0099, r24
+     982:	b9 9a       	sbi	0x17, 1	; 23
+	SET_RELAY_CONFIG(FilterLimitIn   ,'D' ,2   ,0  );
+     984:	82 e3       	ldi	r24, 0x32	; 50
+     986:	80 93 b3 00 	sts	0x00B3, r24
+	SET_RELAY_CONFIG(FilterLimitOut  ,'A' ,0   ,0  );
+     98a:	10 92 a1 00 	sts	0x00A1, r1
+	SET_RELAY_CONFIG(TargetLimitUp   ,'A' ,1   ,0  );
+     98e:	10 93 a2 00 	sts	0x00A2, r17
+	SET_RELAY_CONFIG(TargetLimitDown ,'A' ,2   ,0  );
+     992:	20 93 b4 00 	sts	0x00B4, r18
+	SET_RELAY_CONFIG(Target1Select   ,'C' ,6   ,1  );
+     996:	8e e2       	ldi	r24, 0x2E	; 46
+     998:	80 93 a7 00 	sts	0x00A7, r24
+     99c:	a6 9a       	sbi	0x14, 6	; 20
+	SET_RELAY_CONFIG(Target2Select   ,'C' ,7   ,1  );
+     99e:	8f e2       	ldi	r24, 0x2F	; 47
+     9a0:	80 93 ac 00 	sts	0x00AC, r24
+     9a4:	a7 9a       	sbi	0x14, 7	; 20
+	SET_RELAY_CONFIG(TargetActual    ,'C' ,0   ,0  );
+     9a6:	30 93 b5 00 	sts	0x00B5, r19
+	SET_RELAY_CONFIG(ManualAuto      ,'C' ,1   ,0  );
+     9aa:	81 e2       	ldi	r24, 0x21	; 33
+     9ac:	80 93 9b 00 	sts	0x009B, r24
+
+//Set initial values
+	RELAY_OFF(TargetRelayUp);
+     9b0:	8a e1       	ldi	r24, 0x1A	; 26
+     9b2:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+	RELAY_OFF(TargetRelayDown);
+     9b6:	80 91 a3 00 	lds	r24, 0x00A3
+     9ba:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+	RELAY_OFF(FilterRelayIn);
+     9be:	80 91 aa 00 	lds	r24, 0x00AA
+     9c2:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+	RELAY_OFF(FilterRelayOut);
+     9c6:	80 91 99 00 	lds	r24, 0x0099
+     9ca:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+	RELAY_OFF(Target1Select);
+     9ce:	80 91 a7 00 	lds	r24, 0x00A7
+     9d2:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+	RELAY_OFF(Target2Select);
+     9d6:	80 91 ac 00 	lds	r24, 0x00AC
+     9da:	0e 94 be 00 	call	0x17c	; 0x17c <RELAY_OFF>
+
+
+	TIMSK = _BV(TOIE1);			// Enable Timer1 Overflow Interrupt Enable bit
+     9de:	84 e0       	ldi	r24, 0x04	; 4
+     9e0:	89 bf       	out	0x39, r24	; 57
+	TIMSK |= _BV(TOIE0);		// Enable Timer0 Overflow Interrupt Enable bit
+     9e2:	89 b7       	in	r24, 0x39	; 57
+     9e4:	81 60       	ori	r24, 0x01	; 1
+     9e6:	89 bf       	out	0x39, r24	; 57
+
+	
+	if(!IS_RELAY_ON(ManualAuto))   // We are in the Automatic mode.
+     9e8:	80 91 9b 00 	lds	r24, 0x009B
+     9ec:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     9f0:	88 23       	and	r24, r24
+     9f2:	09 f5       	brne	.+66     	; 0xa36 <ioinit+0x13e>
+	{  	
+		ItWasManual = 0;
+     9f4:	10 92 9c 00 	sts	0x009C, r1
+		TargetCurrent = IS_RELAY_ON(TargetActual);
+     9f8:	80 91 b5 00 	lds	r24, 0x00B5
+     9fc:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     a00:	80 93 9a 00 	sts	0x009A, r24
+		TargetRequested = TargetCurrent==0? 1 : 0;
+     a04:	10 92 b7 00 	sts	0x00B7, r1
+     a08:	88 23       	and	r24, r24
+     a0a:	11 f4       	brne	.+4      	; 0xa10 <ioinit+0x118>
+     a0c:	10 93 b7 00 	sts	0x00B7, r17
+		Urequested = 0;
+     a10:	10 92 a5 00 	sts	0x00A5, r1
+     a14:	10 92 a4 00 	sts	0x00A4, r1
+		FilterRequested = GET_CURRENT_FILTER - 1;
+     a18:	80 91 a1 00 	lds	r24, 0x00A1
+     a1c:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     a20:	18 2f       	mov	r17, r24
+     a22:	80 91 b3 00 	lds	r24, 0x00B3
+     a26:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+     a2a:	11 50       	subi	r17, 0x01	; 1
+     a2c:	88 0f       	add	r24, r24
+     a2e:	81 0f       	add	r24, r17
+     a30:	80 93 b2 00 	sts	0x00B2, r24
+     a34:	02 c0       	rjmp	.+4      	; 0xa3a <ioinit+0x142>
+	} 
+	else 
+	{
+		ItWasManual = 1;
+     a36:	10 93 9c 00 	sts	0x009C, r17
+	}
+
+	intflags.adc_int = 0;
+     a3a:	80 91 b8 00 	lds	r24, 0x00B8
+     a3e:	8d 7f       	andi	r24, 0xFD	; 253
+     a40:	80 93 b8 00 	sts	0x00B8, r24
+	intflags.tmr_int = 0;
+     a44:	80 91 b8 00 	lds	r24, 0x00B8
+     a48:	8e 7f       	andi	r24, 0xFE	; 254
+     a4a:	80 93 b8 00 	sts	0x00B8, r24
+	intflags.rx_int  = 0;
+     a4e:	80 91 b8 00 	lds	r24, 0x00B8
+     a52:	8b 7f       	andi	r24, 0xFB	; 251
+     a54:	80 93 b8 00 	sts	0x00B8, r24
+
+	sei();			/* enable interrupts */
+     a58:	78 94       	sei
+
+  /*
+   * Enable the watchdog with the largest prescaler.  Will cause a
+   * watchdog reset after approximately 2 s @ Vcc = 5 V
+   */
+  wdt_enable(WDTO_2S);
+     a5a:	2f e0       	ldi	r18, 0x0F	; 15
+     a5c:	88 e1       	ldi	r24, 0x18	; 24
+     a5e:	90 e0       	ldi	r25, 0x00	; 0
+     a60:	0f b6       	in	r0, 0x3f	; 63
+     a62:	f8 94       	cli
+     a64:	a8 95       	wdr
+     a66:	81 bd       	out	0x21, r24	; 33
+     a68:	0f be       	out	0x3f, r0	; 63
+     a6a:	21 bd       	out	0x21, r18	; 33
+	}
+	intflags.adc_int = 0;
+	intflags.tmr_int = 0;
+	intflags.rx_int = 0;
+#endif
+}
+     a6c:	1f 91       	pop	r17
+     a6e:	08 95       	ret
+
+00000a70 <read_uint16>:
+//---------------------------------------------------------------------------
+
+uint16_t read_uint16(uint16_t *store, uint16_t *HowMany)
+{
+     a70:	0f 93       	push	r16
+     a72:	1f 93       	push	r17
+     a74:	cf 93       	push	r28
+     a76:	df 93       	push	r29
+     a78:	8c 01       	movw	r16, r24
+     a7a:	eb 01       	movw	r28, r22
+     a7c:	6f ef       	ldi	r22, 0xFF	; 255
+     a7e:	7f ef       	ldi	r23, 0xFF	; 255
+     a80:	a0 e0       	ldi	r26, 0x00	; 0
+     a82:	b0 e0       	ldi	r27, 0x00	; 0
+     a84:	38 c0       	rjmp	.+112    	; 0xaf6 <read_uint16+0x86>
+
+#define MAXWAIT 1000	
+
+	while(++cycle < MAXWAIT)
+	{	
+		wdt_reset();
+     a86:	a8 95       	wdr
+		sleep_mode();
+     a88:	85 b7       	in	r24, 0x35	; 53
+     a8a:	80 64       	ori	r24, 0x40	; 64
+     a8c:	85 bf       	out	0x35, r24	; 53
+     a8e:	88 95       	sleep
+     a90:	85 b7       	in	r24, 0x35	; 53
+     a92:	8f 7b       	andi	r24, 0xBF	; 191
+     a94:	85 bf       	out	0x35, r24	; 53
+		if(!intflags.rx_int) continue;   // ignore other interrupts
+     a96:	80 91 b8 00 	lds	r24, 0x00B8
+     a9a:	82 ff       	sbrs	r24, 2
+     a9c:	38 c0       	rjmp	.+112    	; 0xb0e <read_uint16+0x9e>
+		intflags.rx_int = 0;
+     a9e:	80 91 b8 00 	lds	r24, 0x00B8
+     aa2:	8b 7f       	andi	r24, 0xFB	; 251
+     aa4:	80 93 b8 00 	sts	0x00B8, r24
+		rxc = rxbuff;						
+     aa8:	40 91 ab 00 	lds	r20, 0x00AB
+		if(rxc == '\n') break;
+     aac:	4a 30       	cpi	r20, 0x0A	; 10
+     aae:	a9 f1       	breq	.+106    	; 0xb1a <read_uint16+0xaa>
+		if((rxc >= '0') && (rxc <= '9'))
+     ab0:	84 2f       	mov	r24, r20
+     ab2:	80 53       	subi	r24, 0x30	; 48
+     ab4:	8a 30       	cpi	r24, 0x0A	; 10
+     ab6:	08 f5       	brcc	.+66     	; 0xafa <read_uint16+0x8a>
+		{
+			if(ind == -1) ind = 0; // trick to skip leading blanks
+     ab8:	8f ef       	ldi	r24, 0xFF	; 255
+     aba:	6f 3f       	cpi	r22, 0xFF	; 255
+     abc:	78 07       	cpc	r23, r24
+     abe:	11 f4       	brne	.+4      	; 0xac4 <read_uint16+0x54>
+     ac0:	60 e0       	ldi	r22, 0x00	; 0
+     ac2:	70 e0       	ldi	r23, 0x00	; 0
+			changed = 0;
+			store[ind] = store[ind]*10 + (rxc-'0');
+     ac4:	fb 01       	movw	r30, r22
+     ac6:	ee 0f       	add	r30, r30
+     ac8:	ff 1f       	adc	r31, r31
+     aca:	e0 0f       	add	r30, r16
+     acc:	f1 1f       	adc	r31, r17
+     ace:	50 e0       	ldi	r21, 0x00	; 0
+     ad0:	40 53       	subi	r20, 0x30	; 48
+     ad2:	50 40       	sbci	r21, 0x00	; 0
+     ad4:	80 81       	ld	r24, Z
+     ad6:	91 81       	ldd	r25, Z+1	; 0x01
+     ad8:	9c 01       	movw	r18, r24
+     ada:	22 0f       	add	r18, r18
+     adc:	33 1f       	adc	r19, r19
+     ade:	22 0f       	add	r18, r18
+     ae0:	33 1f       	adc	r19, r19
+     ae2:	22 0f       	add	r18, r18
+     ae4:	33 1f       	adc	r19, r19
+     ae6:	88 0f       	add	r24, r24
+     ae8:	99 1f       	adc	r25, r25
+     aea:	28 0f       	add	r18, r24
+     aec:	39 1f       	adc	r19, r25
+     aee:	42 0f       	add	r20, r18
+     af0:	53 1f       	adc	r21, r19
+     af2:	51 83       	std	Z+1, r21	; 0x01
+     af4:	40 83       	st	Z, r20
+     af6:	90 e0       	ldi	r25, 0x00	; 0
+     af8:	0a c0       	rjmp	.+20     	; 0xb0e <read_uint16+0x9e>
+		} else if(!changed) 
+     afa:	99 23       	and	r25, r25
+     afc:	41 f4       	brne	.+16     	; 0xb0e <read_uint16+0x9e>
+		{
+			ind++;
+     afe:	6f 5f       	subi	r22, 0xFF	; 255
+     b00:	7f 4f       	sbci	r23, 0xFF	; 255
+			changed = 1;
+			if(ind == *HowMany) break;
+     b02:	88 81       	ld	r24, Y
+     b04:	99 81       	ldd	r25, Y+1	; 0x01
+     b06:	68 17       	cp	r22, r24
+     b08:	79 07       	cpc	r23, r25
+     b0a:	39 f0       	breq	.+14     	; 0xb1a <read_uint16+0xaa>
+     b0c:	91 e0       	ldi	r25, 0x01	; 1
+uint8_t	changed = 0;
+uint8_t rxc;
+
+#define MAXWAIT 1000	
+
+	while(++cycle < MAXWAIT)
+     b0e:	11 96       	adiw	r26, 0x01	; 1
+     b10:	83 e0       	ldi	r24, 0x03	; 3
+     b12:	a8 3e       	cpi	r26, 0xE8	; 232
+     b14:	b8 07       	cpc	r27, r24
+     b16:	09 f0       	breq	.+2      	; 0xb1a <read_uint16+0xaa>
+     b18:	b6 cf       	rjmp	.-148    	; 0xa86 <read_uint16+0x16>
+			changed = 1;
+			if(ind == *HowMany) break;
+		}
+	}
+	
+	*HowMany = (ind < 0) ? 0 : ind;
+     b1a:	fb 01       	movw	r30, r22
+     b1c:	77 ff       	sbrs	r23, 7
+     b1e:	02 c0       	rjmp	.+4      	; 0xb24 <read_uint16+0xb4>
+     b20:	e0 e0       	ldi	r30, 0x00	; 0
+     b22:	f0 e0       	ldi	r31, 0x00	; 0
+     b24:	f9 83       	std	Y+1, r31	; 0x01
+     b26:	e8 83       	st	Y, r30
+     b28:	28 ee       	ldi	r18, 0xE8	; 232
+     b2a:	33 e0       	ldi	r19, 0x03	; 3
+     b2c:	2a 1b       	sub	r18, r26
+     b2e:	3b 0b       	sbc	r19, r27
+	return (MAXWAIT-cycle);
+
+}
+     b30:	c9 01       	movw	r24, r18
+     b32:	df 91       	pop	r29
+     b34:	cf 91       	pop	r28
+     b36:	1f 91       	pop	r17
+     b38:	0f 91       	pop	r16
+     b3a:	08 95       	ret
+
+00000b3c <scan_uint16>:
+//---------------------------------------------------------------------------
+
+int8_t scan_uint16(uint16_t *store, uint8_t HowMany, char *buf, uint8_t buflen)
+{
+     b3c:	cf 92       	push	r12
+     b3e:	df 92       	push	r13
+     b40:	ef 92       	push	r14
+     b42:	ff 92       	push	r15
+     b44:	0f 93       	push	r16
+     b46:	1f 93       	push	r17
+     b48:	cf 93       	push	r28
+     b4a:	df 93       	push	r29
+     b4c:	ec 01       	movw	r28, r24
+     b4e:	6a 01       	movw	r12, r20
+int8_t	ind = -1;    // trick to skip leading blanks
+int8_t	cycle = -1;
+uint8_t	changed = 1;
+uint8_t	rxc;
+
+	store[0] = 0;
+     b50:	19 82       	std	Y+1, r1	; 0x01
+     b52:	18 82       	st	Y, r1
+     b54:	7f ef       	ldi	r23, 0xFF	; 255
+     b56:	91 e0       	ldi	r25, 0x01	; 1
+     b58:	a0 e0       	ldi	r26, 0x00	; 0
+     b5a:	b0 e0       	ldi	r27, 0x00	; 0
+	while(++cycle < buflen)
+     b5c:	e2 2e       	mov	r14, r18
+     b5e:	ff 24       	eor	r15, r15
+			store[ind] = store[ind]*10 + (rxc-'0');
+		} else if(!changed) 
+		{
+			ind++;
+			changed = 1;
+			if(ind == HowMany) break;
+     b60:	06 2f       	mov	r16, r22
+     b62:	10 e0       	ldi	r17, 0x00	; 0
+     b64:	3d c0       	rjmp	.+122    	; 0xbe0 <scan_uint16+0xa4>
+uint8_t	rxc;
+
+	store[0] = 0;
+	while(++cycle < buflen)
+	{	
+		rxc = buf[cycle];						
+     b66:	f6 01       	movw	r30, r12
+     b68:	ea 0f       	add	r30, r26
+     b6a:	fb 1f       	adc	r31, r27
+     b6c:	40 81       	ld	r20, Z
+		if(rxc == ETX || rxc == EOT) break;
+     b6e:	84 2f       	mov	r24, r20
+     b70:	83 50       	subi	r24, 0x03	; 3
+     b72:	82 30       	cpi	r24, 0x02	; 2
+     b74:	c8 f1       	brcs	.+114    	; 0xbe8 <scan_uint16+0xac>
+		if((rxc >= '0') && (rxc <= '9'))
+     b76:	8d 52       	subi	r24, 0x2D	; 45
+     b78:	8a 30       	cpi	r24, 0x0A	; 10
+     b7a:	00 f5       	brcc	.+64     	; 0xbbc <scan_uint16+0x80>
+		{
+			if(ind == -1) ind = 0; // trick to skip leading blanks
+     b7c:	7f 3f       	cpi	r23, 0xFF	; 255
+     b7e:	09 f4       	brne	.+2      	; 0xb82 <scan_uint16+0x46>
+     b80:	70 e0       	ldi	r23, 0x00	; 0
+			changed = 0;
+			store[ind] = store[ind]*10 + (rxc-'0');
+     b82:	e7 2f       	mov	r30, r23
+     b84:	ff 27       	eor	r31, r31
+     b86:	e7 fd       	sbrc	r30, 7
+     b88:	f0 95       	com	r31
+     b8a:	ee 0f       	add	r30, r30
+     b8c:	ff 1f       	adc	r31, r31
+     b8e:	ec 0f       	add	r30, r28
+     b90:	fd 1f       	adc	r31, r29
+     b92:	50 e0       	ldi	r21, 0x00	; 0
+     b94:	40 53       	subi	r20, 0x30	; 48
+     b96:	50 40       	sbci	r21, 0x00	; 0
+     b98:	80 81       	ld	r24, Z
+     b9a:	91 81       	ldd	r25, Z+1	; 0x01
+     b9c:	9c 01       	movw	r18, r24
+     b9e:	63 e0       	ldi	r22, 0x03	; 3
+     ba0:	22 0f       	add	r18, r18
+     ba2:	33 1f       	adc	r19, r19
+     ba4:	6a 95       	dec	r22
+     ba6:	e1 f7       	brne	.-8      	; 0xba0 <scan_uint16+0x64>
+     ba8:	88 0f       	add	r24, r24
+     baa:	99 1f       	adc	r25, r25
+     bac:	28 0f       	add	r18, r24
+     bae:	39 1f       	adc	r19, r25
+     bb0:	42 0f       	add	r20, r18
+     bb2:	53 1f       	adc	r21, r19
+     bb4:	51 83       	std	Z+1, r21	; 0x01
+     bb6:	40 83       	st	Z, r20
+     bb8:	90 e0       	ldi	r25, 0x00	; 0
+     bba:	11 c0       	rjmp	.+34     	; 0xbde <scan_uint16+0xa2>
+		} else if(!changed) 
+     bbc:	99 23       	and	r25, r25
+     bbe:	71 f4       	brne	.+28     	; 0xbdc <scan_uint16+0xa0>
+		{
+			ind++;
+     bc0:	7f 5f       	subi	r23, 0xFF	; 255
+			changed = 1;
+			if(ind == HowMany) break;
+     bc2:	e7 2f       	mov	r30, r23
+     bc4:	ff 27       	eor	r31, r31
+     bc6:	e7 fd       	sbrc	r30, 7
+     bc8:	f0 95       	com	r31
+     bca:	e0 17       	cp	r30, r16
+     bcc:	f1 07       	cpc	r31, r17
+     bce:	61 f0       	breq	.+24     	; 0xbe8 <scan_uint16+0xac>
+			store[ind] = 0;
+     bd0:	ee 0f       	add	r30, r30
+     bd2:	ff 1f       	adc	r31, r31
+     bd4:	ec 0f       	add	r30, r28
+     bd6:	fd 1f       	adc	r31, r29
+     bd8:	11 82       	std	Z+1, r1	; 0x01
+     bda:	10 82       	st	Z, r1
+     bdc:	91 e0       	ldi	r25, 0x01	; 1
+     bde:	11 96       	adiw	r26, 0x01	; 1
+int8_t	cycle = -1;
+uint8_t	changed = 1;
+uint8_t	rxc;
+
+	store[0] = 0;
+	while(++cycle < buflen)
+     be0:	ae 15       	cp	r26, r14
+     be2:	bf 05       	cpc	r27, r15
+     be4:	0c f4       	brge	.+2      	; 0xbe8 <scan_uint16+0xac>
+     be6:	bf cf       	rjmp	.-130    	; 0xb66 <scan_uint16+0x2a>
+	}
+	
+//	ind = (ind < 0) ? 0 : ind;
+	return ind+1;
+
+}
+     be8:	87 2f       	mov	r24, r23
+     bea:	8f 5f       	subi	r24, 0xFF	; 255
+     bec:	df 91       	pop	r29
+     bee:	cf 91       	pop	r28
+     bf0:	1f 91       	pop	r17
+     bf2:	0f 91       	pop	r16
+     bf4:	ff 90       	pop	r15
+     bf6:	ef 90       	pop	r14
+     bf8:	df 90       	pop	r13
+     bfa:	cf 90       	pop	r12
+     bfc:	08 95       	ret
+
+00000bfe <calc_crc>:
+//---------------------------------------------------------------------------
+
+uint8_t calc_crc(char* str,uint8_t len)
+{
+     bfe:	ac 01       	movw	r20, r24
+     c00:	20 e0       	ldi	r18, 0x00	; 0
+     c02:	06 c0       	rjmp	.+12     	; 0xc10 <calc_crc+0x12>
+//
+//	Compute CRC code for a string of char
+  uint8_t bcc  = 0;
+  while (len) {
+     bcc ^= str[--len];
+     c04:	61 50       	subi	r22, 0x01	; 1
+     c06:	fa 01       	movw	r30, r20
+     c08:	e6 0f       	add	r30, r22
+     c0a:	f1 1d       	adc	r31, r1
+     c0c:	80 81       	ld	r24, Z
+     c0e:	28 27       	eor	r18, r24
+uint8_t calc_crc(char* str,uint8_t len)
+{
+//
+//	Compute CRC code for a string of char
+  uint8_t bcc  = 0;
+  while (len) {
+     c10:	66 23       	and	r22, r22
+     c12:	c1 f7       	brne	.-16     	; 0xc04 <calc_crc+0x6>
+     bcc ^= str[--len];
+//     bcc = bcc & 0x7F;  // It is only for 7 bit transmission protocol
+  }
+	return bcc;
+}
+     c14:	82 2f       	mov	r24, r18
+     c16:	08 95       	ret
+
+00000c18 <read_binary>:
+//---------------------------------------------------------------------------
+
+int8_t read_binary(char *store, uint8_t *HowMany)
+{
+     c18:	cf 93       	push	r28
+     c1a:	df 93       	push	r29
+     c1c:	ec 01       	movw	r28, r24
+     c1e:	db 01       	movw	r26, r22
+     c20:	28 ee       	ldi	r18, 0xE8	; 232
+     c22:	33 e0       	ldi	r19, 0x03	; 3
+     c24:	18 c0       	rjmp	.+48     	; 0xc56 <read_binary+0x3e>
+
+// Read length of the record
+	len = 0;
+	while(--cycle)
+	{	
+		wdt_reset();
+     c26:	a8 95       	wdr
+		sleep_mode();
+     c28:	85 b7       	in	r24, 0x35	; 53
+     c2a:	80 64       	ori	r24, 0x40	; 64
+     c2c:	85 bf       	out	0x35, r24	; 53
+     c2e:	88 95       	sleep
+     c30:	85 b7       	in	r24, 0x35	; 53
+     c32:	8f 7b       	andi	r24, 0xBF	; 191
+     c34:	85 bf       	out	0x35, r24	; 53
+		if(!intflags.rx_int) continue;   // ignore all other interrupts
+     c36:	80 91 b8 00 	lds	r24, 0x00B8
+     c3a:	82 ff       	sbrs	r24, 2
+     c3c:	0c c0       	rjmp	.+24     	; 0xc56 <read_binary+0x3e>
+		intflags.rx_int = 0;
+     c3e:	80 91 b8 00 	lds	r24, 0x00B8
+     c42:	8b 7f       	andi	r24, 0xFB	; 251
+     c44:	80 93 b8 00 	sts	0x00B8, r24
+		len = rxbuff;
+     c48:	40 91 ab 00 	lds	r20, 0x00AB
+		break;
+	}
+	if(!len) return -1;
+     c4c:	44 23       	and	r20, r20
+     c4e:	09 f4       	brne	.+2      	; 0xc52 <read_binary+0x3a>
+     c50:	80 c0       	rjmp	.+256    	; 0xd52 <read_binary+0x13a>
+     c52:	50 e0       	ldi	r21, 0x00	; 0
+     c54:	3f c0       	rjmp	.+126    	; 0xcd4 <read_binary+0xbc>
+uint8_t len,ind;
+uint16_t cycle=MAXWAIT;
+
+// Read length of the record
+	len = 0;
+	while(--cycle)
+     c56:	21 50       	subi	r18, 0x01	; 1
+     c58:	30 40       	sbci	r19, 0x00	; 0
+     c5a:	29 f7       	brne	.-54     	; 0xc26 <read_binary+0xe>
+     c5c:	7a c0       	rjmp	.+244    	; 0xd52 <read_binary+0x13a>
+	
+// Read record body
+	ind = 0;
+	while(--cycle)
+	{	
+		wdt_reset();
+     c5e:	a8 95       	wdr
+		sleep_mode();
+     c60:	85 b7       	in	r24, 0x35	; 53
+     c62:	80 64       	ori	r24, 0x40	; 64
+     c64:	85 bf       	out	0x35, r24	; 53
+     c66:	88 95       	sleep
+     c68:	85 b7       	in	r24, 0x35	; 53
+     c6a:	8f 7b       	andi	r24, 0xBF	; 191
+     c6c:	85 bf       	out	0x35, r24	; 53
+		if(!intflags.rx_int) continue;   // ignore all other interrupts
+     c6e:	80 91 b8 00 	lds	r24, 0x00B8
+     c72:	82 ff       	sbrs	r24, 2
+     c74:	2f c0       	rjmp	.+94     	; 0xcd4 <read_binary+0xbc>
+		intflags.rx_int = 0;
+     c76:	80 91 b8 00 	lds	r24, 0x00B8
+     c7a:	8b 7f       	andi	r24, 0xFB	; 251
+     c7c:	80 93 b8 00 	sts	0x00B8, r24
+		store[ind++] = rxbuff;
+     c80:	80 91 ab 00 	lds	r24, 0x00AB
+     c84:	fe 01       	movw	r30, r28
+     c86:	e5 0f       	add	r30, r21
+     c88:	f1 1d       	adc	r31, r1
+     c8a:	80 83       	st	Z, r24
+     c8c:	5f 5f       	subi	r21, 0xFF	; 255
+		if(ind == len) break;
+     c8e:	54 17       	cp	r21, r20
+     c90:	29 f1       	breq	.+74     	; 0xcdc <read_binary+0xc4>
+		if(ind == *HowMany)  {
+     c92:	8c 91       	ld	r24, X
+     c94:	58 17       	cp	r21, r24
+     c96:	f1 f4       	brne	.+60     	; 0xcd4 <read_binary+0xbc>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     c98:	5d 9b       	sbis	0x0b, 5	; 11
+     c9a:	fe cf       	rjmp	.-4      	; 0xc98 <read_binary+0x80>
+	UDR = c;
+     c9c:	85 e1       	ldi	r24, 0x15	; 21
+     c9e:	8c b9       	out	0x0c, r24	; 12
+     ca0:	15 c0       	rjmp	.+42     	; 0xccc <read_binary+0xb4>
+		if(ind == len) break;
+		if(ind == *HowMany)  {
+			putchr(NAK);
+			while(--cycle)  // Skip the rest of message
+			{	
+				wdt_reset();
+     ca2:	a8 95       	wdr
+				sleep_mode();
+     ca4:	85 b7       	in	r24, 0x35	; 53
+     ca6:	80 64       	ori	r24, 0x40	; 64
+     ca8:	85 bf       	out	0x35, r24	; 53
+     caa:	88 95       	sleep
+     cac:	85 b7       	in	r24, 0x35	; 53
+     cae:	8f 7b       	andi	r24, 0xBF	; 191
+     cb0:	85 bf       	out	0x35, r24	; 53
+				if(!intflags.rx_int) continue;   // ignore other interrupts
+     cb2:	80 91 b8 00 	lds	r24, 0x00B8
+     cb6:	82 ff       	sbrs	r24, 2
+     cb8:	09 c0       	rjmp	.+18     	; 0xccc <read_binary+0xb4>
+				intflags.rx_int = 0;
+     cba:	80 91 b8 00 	lds	r24, 0x00B8
+     cbe:	8b 7f       	andi	r24, 0xFB	; 251
+     cc0:	80 93 b8 00 	sts	0x00B8, r24
+				if(++ind == len) break;
+     cc4:	5f 5f       	subi	r21, 0xFF	; 255
+     cc6:	54 17       	cp	r21, r20
+     cc8:	09 f4       	brne	.+2      	; 0xccc <read_binary+0xb4>
+     cca:	45 c0       	rjmp	.+138    	; 0xd56 <read_binary+0x13e>
+		intflags.rx_int = 0;
+		store[ind++] = rxbuff;
+		if(ind == len) break;
+		if(ind == *HowMany)  {
+			putchr(NAK);
+			while(--cycle)  // Skip the rest of message
+     ccc:	21 50       	subi	r18, 0x01	; 1
+     cce:	30 40       	sbci	r19, 0x00	; 0
+     cd0:	41 f7       	brne	.-48     	; 0xca2 <read_binary+0x8a>
+     cd2:	41 c0       	rjmp	.+130    	; 0xd56 <read_binary+0x13e>
+	}
+	if(!len) return -1;
+	
+// Read record body
+	ind = 0;
+	while(--cycle)
+     cd4:	21 50       	subi	r18, 0x01	; 1
+     cd6:	30 40       	sbci	r19, 0x00	; 0
+     cd8:	09 f0       	breq	.+2      	; 0xcdc <read_binary+0xc4>
+     cda:	c1 cf       	rjmp	.-126    	; 0xc5e <read_binary+0x46>
+			}
+			return -2;          // Insufficient buffer error
+		}
+	}
+	
+	*HowMany = ind;
+     cdc:	5c 93       	st	X, r21
+	if(cycle == 0) {
+     cde:	21 15       	cp	r18, r1
+     ce0:	31 05       	cpc	r19, r1
+     ce2:	c1 f4       	brne	.+48     	; 0xd14 <read_binary+0xfc>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     ce4:	5d 9b       	sbis	0x0b, 5	; 11
+     ce6:	fe cf       	rjmp	.-4      	; 0xce4 <read_binary+0xcc>
+     ce8:	1a c0       	rjmp	.+52     	; 0xd1e <read_binary+0x106>
+		return 0;
+	}
+
+ // Read the CRC byte
+	while(--cycle) 	{	
+		wdt_reset();
+     cea:	a8 95       	wdr
+		sleep_mode();
+     cec:	85 b7       	in	r24, 0x35	; 53
+     cee:	80 64       	ori	r24, 0x40	; 64
+     cf0:	85 bf       	out	0x35, r24	; 53
+     cf2:	88 95       	sleep
+     cf4:	85 b7       	in	r24, 0x35	; 53
+     cf6:	8f 7b       	andi	r24, 0xBF	; 191
+     cf8:	85 bf       	out	0x35, r24	; 53
+		if(!intflags.rx_int) continue;   // ignore other interrupts
+     cfa:	80 91 b8 00 	lds	r24, 0x00B8
+     cfe:	82 ff       	sbrs	r24, 2
+     d00:	09 c0       	rjmp	.+18     	; 0xd14 <read_binary+0xfc>
+		intflags.rx_int = 0;
+     d02:	80 91 b8 00 	lds	r24, 0x00B8
+     d06:	8b 7f       	andi	r24, 0xFB	; 251
+     d08:	80 93 b8 00 	sts	0x00B8, r24
+		len = rxbuff;
+     d0c:	60 91 ab 00 	lds	r22, 0x00AB
+     d10:	40 e0       	ldi	r20, 0x00	; 0
+     d12:	0f c0       	rjmp	.+30     	; 0xd32 <read_binary+0x11a>
+		putchr(NAK);
+		return 0;
+	}
+
+ // Read the CRC byte
+	while(--cycle) 	{	
+     d14:	21 50       	subi	r18, 0x01	; 1
+     d16:	30 40       	sbci	r19, 0x00	; 0
+     d18:	41 f7       	brne	.-48     	; 0xcea <read_binary+0xd2>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     d1a:	5d 9b       	sbis	0x0b, 5	; 11
+     d1c:	fe cf       	rjmp	.-4      	; 0xd1a <read_binary+0x102>
+	UDR = c;
+     d1e:	85 e1       	ldi	r24, 0x15	; 21
+     d20:	8c b9       	out	0x0c, r24	; 12
+     d22:	80 e0       	ldi	r24, 0x00	; 0
+     d24:	19 c0       	rjmp	.+50     	; 0xd58 <read_binary+0x140>
+{
+//
+//	Compute CRC code for a string of char
+  uint8_t bcc  = 0;
+  while (len) {
+     bcc ^= str[--len];
+     d26:	51 50       	subi	r21, 0x01	; 1
+     d28:	fe 01       	movw	r30, r28
+     d2a:	e5 0f       	add	r30, r21
+     d2c:	f1 1d       	adc	r31, r1
+     d2e:	80 81       	ld	r24, Z
+     d30:	48 27       	eor	r20, r24
+uint8_t calc_crc(char* str,uint8_t len)
+{
+//
+//	Compute CRC code for a string of char
+  uint8_t bcc  = 0;
+  while (len) {
+     d32:	55 23       	and	r21, r21
+     d34:	c1 f7       	brne	.-16     	; 0xd26 <read_binary+0x10e>
+		putchr(NAK);
+		return 0;
+	}
+	
+// Check the CRC
+	if(len == calc_crc(store,ind)) {
+     d36:	64 17       	cp	r22, r20
+     d38:	31 f4       	brne	.+12     	; 0xd46 <read_binary+0x12e>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     d3a:	5d 9b       	sbis	0x0b, 5	; 11
+     d3c:	fe cf       	rjmp	.-4      	; 0xd3a <read_binary+0x122>
+	UDR = c;
+     d3e:	86 e0       	ldi	r24, 0x06	; 6
+     d40:	8c b9       	out	0x0c, r24	; 12
+	} else {
+		putchr(NAK);
+		return -3;      // Transmission error
+	}
+
+	return (cycle);
+     d42:	82 2f       	mov	r24, r18
+     d44:	09 c0       	rjmp	.+18     	; 0xd58 <read_binary+0x140>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     d46:	5d 9b       	sbis	0x0b, 5	; 11
+     d48:	fe cf       	rjmp	.-4      	; 0xd46 <read_binary+0x12e>
+	UDR = c;
+     d4a:	85 e1       	ldi	r24, 0x15	; 21
+     d4c:	8c b9       	out	0x0c, r24	; 12
+     d4e:	8d ef       	ldi	r24, 0xFD	; 253
+     d50:	03 c0       	rjmp	.+6      	; 0xd58 <read_binary+0x140>
+// Check the CRC
+	if(len == calc_crc(store,ind)) {
+		putchr(ACK);
+	} else {
+		putchr(NAK);
+		return -3;      // Transmission error
+     d52:	8f ef       	ldi	r24, 0xFF	; 255
+     d54:	01 c0       	rjmp	.+2      	; 0xd58 <read_binary+0x140>
+     d56:	8e ef       	ldi	r24, 0xFE	; 254
+	}
+
+	return (cycle);
+
+}
+     d58:	df 91       	pop	r29
+     d5a:	cf 91       	pop	r28
+     d5c:	08 95       	ret
+
+00000d5e <read_message>:
+//---------------------------------------------------------------------------
+
+int16_t read_message(char *store, uint8_t *HowMany)
+{
+     d5e:	cf 93       	push	r28
+     d60:	df 93       	push	r29
+     d62:	dc 01       	movw	r26, r24
+     d64:	eb 01       	movw	r28, r22
+     d66:	40 e0       	ldi	r20, 0x00	; 0
+     d68:	50 e0       	ldi	r21, 0x00	; 0
+     d6a:	60 e0       	ldi	r22, 0x00	; 0
+     d6c:	20 e0       	ldi	r18, 0x00	; 0
+     d6e:	9c c0       	rjmp	.+312    	; 0xea8 <read_message+0x14a>
+
+#define MAXWAIT 1000	
+
+	while(++cycle < MAXWAIT)
+	{	
+		wdt_reset();
+     d70:	a8 95       	wdr
+		sleep_mode();
+     d72:	85 b7       	in	r24, 0x35	; 53
+     d74:	80 64       	ori	r24, 0x40	; 64
+     d76:	85 bf       	out	0x35, r24	; 53
+     d78:	88 95       	sleep
+     d7a:	85 b7       	in	r24, 0x35	; 53
+     d7c:	8f 7b       	andi	r24, 0xBF	; 191
+     d7e:	85 bf       	out	0x35, r24	; 53
+		if(!intflags.rx_int) continue;   // ignore all other interrupts
+     d80:	80 91 b8 00 	lds	r24, 0x00B8
+     d84:	82 ff       	sbrs	r24, 2
+     d86:	90 c0       	rjmp	.+288    	; 0xea8 <read_message+0x14a>
+		intflags.rx_int = 0;
+     d88:	80 91 b8 00 	lds	r24, 0x00B8
+     d8c:	8b 7f       	andi	r24, 0xFB	; 251
+     d8e:	80 93 b8 00 	sts	0x00B8, r24
+		if(rxc == EOT) {
+     d92:	24 30       	cpi	r18, 0x04	; 4
+     d94:	e9 f5       	brne	.+122    	; 0xe10 <read_message+0xb2>
+			rxc = rxbuff;						
+     d96:	70 91 ab 00 	lds	r23, 0x00AB
+     d9a:	26 2f       	mov	r18, r22
+     d9c:	30 e0       	ldi	r19, 0x00	; 0
+     d9e:	06 c0       	rjmp	.+12     	; 0xdac <read_message+0x4e>
+{
+//
+//	Compute CRC code for a string of char
+  uint8_t bcc  = 0;
+  while (len) {
+     bcc ^= str[--len];
+     da0:	21 50       	subi	r18, 0x01	; 1
+     da2:	fd 01       	movw	r30, r26
+     da4:	e2 0f       	add	r30, r18
+     da6:	f1 1d       	adc	r31, r1
+     da8:	80 81       	ld	r24, Z
+     daa:	38 27       	eor	r19, r24
+uint8_t calc_crc(char* str,uint8_t len)
+{
+//
+//	Compute CRC code for a string of char
+  uint8_t bcc  = 0;
+  while (len) {
+     dac:	22 23       	and	r18, r18
+     dae:	c1 f7       	brne	.-16     	; 0xda0 <read_message+0x42>
+		sleep_mode();
+		if(!intflags.rx_int) continue;   // ignore all other interrupts
+		intflags.rx_int = 0;
+		if(rxc == EOT) {
+			rxc = rxbuff;						
+			if(rxc == calc_crc(store,ind)) {
+     db0:	73 17       	cp	r23, r19
+     db2:	31 f4       	brne	.+12     	; 0xdc0 <read_message+0x62>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     db4:	5d 9b       	sbis	0x0b, 5	; 11
+     db6:	fe cf       	rjmp	.-4      	; 0xdb4 <read_message+0x56>
+	UDR = c;
+     db8:	86 e0       	ldi	r24, 0x06	; 6
+     dba:	8c b9       	out	0x0c, r24	; 12
+		intflags.rx_int = 0;
+		if(rxc == EOT) {
+			rxc = rxbuff;						
+			if(rxc == calc_crc(store,ind)) {
+				putchr(ACK);
+				*HowMany = ind;
+     dbc:	68 83       	st	Y, r22
+     dbe:	7b c0       	rjmp	.+246    	; 0xeb6 <read_message+0x158>
+				break;
+			} else {
+				SET_TIMER(TimerBeep, (ONE_SECOND/4));
+     dc0:	80 91 9d 00 	lds	r24, 0x009D
+     dc4:	90 91 9e 00 	lds	r25, 0x009E
+     dc8:	a0 91 9f 00 	lds	r26, 0x009F
+     dcc:	b0 91 a0 00 	lds	r27, 0x00A0
+     dd0:	00 97       	sbiw	r24, 0x00	; 0
+     dd2:	a1 05       	cpc	r26, r1
+     dd4:	b1 05       	cpc	r27, r1
+     dd6:	a1 f4       	brne	.+40     	; 0xe00 <read_message+0xa2>
+     dd8:	80 91 ad 00 	lds	r24, 0x00AD
+     ddc:	90 91 ae 00 	lds	r25, 0x00AE
+     de0:	a0 91 af 00 	lds	r26, 0x00AF
+     de4:	b0 91 b0 00 	lds	r27, 0x00B0
+     de8:	8c 5c       	subi	r24, 0xCC	; 204
+     dea:	97 4f       	sbci	r25, 0xF7	; 247
+     dec:	af 4f       	sbci	r26, 0xFF	; 255
+     dee:	bf 4f       	sbci	r27, 0xFF	; 255
+     df0:	80 93 9d 00 	sts	0x009D, r24
+     df4:	90 93 9e 00 	sts	0x009E, r25
+     df8:	a0 93 9f 00 	sts	0x009F, r26
+     dfc:	b0 93 a0 00 	sts	0x00A0, r27
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     e00:	5d 9b       	sbis	0x0b, 5	; 11
+     e02:	fe cf       	rjmp	.-4      	; 0xe00 <read_message+0xa2>
+	UDR = c;
+     e04:	85 e1       	ldi	r24, 0x15	; 21
+     e06:	8c b9       	out	0x0c, r24	; 12
+				*HowMany = ind;
+				break;
+			} else {
+				SET_TIMER(TimerBeep, (ONE_SECOND/4));
+				putchr(NAK);
+				*HowMany = ind;
+     e08:	68 83       	st	Y, r22
+     e0a:	2f ef       	ldi	r18, 0xFF	; 255
+     e0c:	3f ef       	ldi	r19, 0xFF	; 255
+     e0e:	83 c0       	rjmp	.+262    	; 0xf16 <read_message+0x1b8>
+				return -1;      // Transmission error
+			}
+		}
+		rxc = rxbuff;						
+     e10:	20 91 ab 00 	lds	r18, 0x00AB
+		store[ind++] = rxc;
+     e14:	fd 01       	movw	r30, r26
+     e16:	e6 0f       	add	r30, r22
+     e18:	f1 1d       	adc	r31, r1
+     e1a:	20 83       	st	Z, r18
+     e1c:	6f 5f       	subi	r22, 0xFF	; 255
+		if(ind == *HowMany)  {
+     e1e:	88 81       	ld	r24, Y
+     e20:	68 17       	cp	r22, r24
+     e22:	09 f0       	breq	.+2      	; 0xe26 <read_message+0xc8>
+     e24:	41 c0       	rjmp	.+130    	; 0xea8 <read_message+0x14a>
+			SET_TIMER(TimerBeep, (ONE_SECOND/4));
+     e26:	80 91 9d 00 	lds	r24, 0x009D
+     e2a:	90 91 9e 00 	lds	r25, 0x009E
+     e2e:	a0 91 9f 00 	lds	r26, 0x009F
+     e32:	b0 91 a0 00 	lds	r27, 0x00A0
+     e36:	00 97       	sbiw	r24, 0x00	; 0
+     e38:	a1 05       	cpc	r26, r1
+     e3a:	b1 05       	cpc	r27, r1
+     e3c:	a1 f4       	brne	.+40     	; 0xe66 <read_message+0x108>
+     e3e:	80 91 ad 00 	lds	r24, 0x00AD
+     e42:	90 91 ae 00 	lds	r25, 0x00AE
+     e46:	a0 91 af 00 	lds	r26, 0x00AF
+     e4a:	b0 91 b0 00 	lds	r27, 0x00B0
+     e4e:	8c 5c       	subi	r24, 0xCC	; 204
+     e50:	97 4f       	sbci	r25, 0xF7	; 247
+     e52:	af 4f       	sbci	r26, 0xFF	; 255
+     e54:	bf 4f       	sbci	r27, 0xFF	; 255
+     e56:	80 93 9d 00 	sts	0x009D, r24
+     e5a:	90 93 9e 00 	sts	0x009E, r25
+     e5e:	a0 93 9f 00 	sts	0x009F, r26
+     e62:	b0 93 a0 00 	sts	0x00A0, r27
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     e66:	5d 9b       	sbis	0x0b, 5	; 11
+     e68:	fe cf       	rjmp	.-4      	; 0xe66 <read_message+0x108>
+	UDR = c;
+     e6a:	85 e1       	ldi	r24, 0x15	; 21
+     e6c:	8c b9       	out	0x0c, r24	; 12
+     e6e:	15 c0       	rjmp	.+42     	; 0xe9a <read_message+0x13c>
+		if(ind == *HowMany)  {
+			SET_TIMER(TimerBeep, (ONE_SECOND/4));
+			putchr(NAK);
+			while(++cycle < MAXWAIT)  // Skip the rest of message
+			{	
+				wdt_reset();
+     e70:	a8 95       	wdr
+				sleep_mode();
+     e72:	85 b7       	in	r24, 0x35	; 53
+     e74:	80 64       	ori	r24, 0x40	; 64
+     e76:	85 bf       	out	0x35, r24	; 53
+     e78:	88 95       	sleep
+     e7a:	85 b7       	in	r24, 0x35	; 53
+     e7c:	8f 7b       	andi	r24, 0xBF	; 191
+     e7e:	85 bf       	out	0x35, r24	; 53
+				if(!intflags.rx_int) continue;   // ignore other interrupts
+     e80:	80 91 b8 00 	lds	r24, 0x00B8
+     e84:	82 ff       	sbrs	r24, 2
+     e86:	09 c0       	rjmp	.+18     	; 0xe9a <read_message+0x13c>
+				intflags.rx_int = 0;
+     e88:	80 91 b8 00 	lds	r24, 0x00B8
+     e8c:	8b 7f       	andi	r24, 0xFB	; 251
+     e8e:	80 93 b8 00 	sts	0x00B8, r24
+				if(rxbuff == EOT) break;
+     e92:	80 91 ab 00 	lds	r24, 0x00AB
+     e96:	84 30       	cpi	r24, 0x04	; 4
+     e98:	e1 f1       	breq	.+120    	; 0xf12 <read_message+0x1b4>
+		rxc = rxbuff;						
+		store[ind++] = rxc;
+		if(ind == *HowMany)  {
+			SET_TIMER(TimerBeep, (ONE_SECOND/4));
+			putchr(NAK);
+			while(++cycle < MAXWAIT)  // Skip the rest of message
+     e9a:	4f 5f       	subi	r20, 0xFF	; 255
+     e9c:	5f 4f       	sbci	r21, 0xFF	; 255
+     e9e:	83 e0       	ldi	r24, 0x03	; 3
+     ea0:	48 3e       	cpi	r20, 0xE8	; 232
+     ea2:	58 07       	cpc	r21, r24
+     ea4:	28 f3       	brcs	.-54     	; 0xe70 <read_message+0x112>
+     ea6:	35 c0       	rjmp	.+106    	; 0xf12 <read_message+0x1b4>
+uint8_t	 ind = 0;
+uint8_t  rxc = 0;
+
+#define MAXWAIT 1000	
+
+	while(++cycle < MAXWAIT)
+     ea8:	4f 5f       	subi	r20, 0xFF	; 255
+     eaa:	5f 4f       	sbci	r21, 0xFF	; 255
+     eac:	83 e0       	ldi	r24, 0x03	; 3
+     eae:	48 3e       	cpi	r20, 0xE8	; 232
+     eb0:	58 07       	cpc	r21, r24
+     eb2:	09 f0       	breq	.+2      	; 0xeb6 <read_message+0x158>
+     eb4:	5d cf       	rjmp	.-326    	; 0xd70 <read_message+0x12>
+			}
+			return -2;          // Insufficient buffer error
+		}
+	}
+	
+	*HowMany = ind;
+     eb6:	68 83       	st	Y, r22
+	if(MAXWAIT == cycle) {
+     eb8:	83 e0       	ldi	r24, 0x03	; 3
+     eba:	48 3e       	cpi	r20, 0xE8	; 232
+     ebc:	58 07       	cpc	r21, r24
+     ebe:	21 f5       	brne	.+72     	; 0xf08 <read_message+0x1aa>
+		SET_TIMER(TimerBeep, (ONE_SECOND/4));
+     ec0:	80 91 9d 00 	lds	r24, 0x009D
+     ec4:	90 91 9e 00 	lds	r25, 0x009E
+     ec8:	a0 91 9f 00 	lds	r26, 0x009F
+     ecc:	b0 91 a0 00 	lds	r27, 0x00A0
+     ed0:	00 97       	sbiw	r24, 0x00	; 0
+     ed2:	a1 05       	cpc	r26, r1
+     ed4:	b1 05       	cpc	r27, r1
+     ed6:	a1 f4       	brne	.+40     	; 0xf00 <read_message+0x1a2>
+     ed8:	80 91 ad 00 	lds	r24, 0x00AD
+     edc:	90 91 ae 00 	lds	r25, 0x00AE
+     ee0:	a0 91 af 00 	lds	r26, 0x00AF
+     ee4:	b0 91 b0 00 	lds	r27, 0x00B0
+     ee8:	8c 5c       	subi	r24, 0xCC	; 204
+     eea:	97 4f       	sbci	r25, 0xF7	; 247
+     eec:	af 4f       	sbci	r26, 0xFF	; 255
+     eee:	bf 4f       	sbci	r27, 0xFF	; 255
+     ef0:	80 93 9d 00 	sts	0x009D, r24
+     ef4:	90 93 9e 00 	sts	0x009E, r25
+     ef8:	a0 93 9f 00 	sts	0x009F, r26
+     efc:	b0 93 a0 00 	sts	0x00A0, r27
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     f00:	5d 9b       	sbis	0x0b, 5	; 11
+     f02:	fe cf       	rjmp	.-4      	; 0xf00 <read_message+0x1a2>
+	UDR = c;
+     f04:	85 e1       	ldi	r24, 0x15	; 21
+     f06:	8c b9       	out	0x0c, r24	; 12
+	*HowMany = ind;
+	if(MAXWAIT == cycle) {
+		SET_TIMER(TimerBeep, (ONE_SECOND/4));
+		putchr(NAK);
+	}
+	return (MAXWAIT-cycle);
+     f08:	28 ee       	ldi	r18, 0xE8	; 232
+     f0a:	33 e0       	ldi	r19, 0x03	; 3
+     f0c:	24 1b       	sub	r18, r20
+     f0e:	35 0b       	sbc	r19, r21
+     f10:	02 c0       	rjmp	.+4      	; 0xf16 <read_message+0x1b8>
+     f12:	2e ef       	ldi	r18, 0xFE	; 254
+     f14:	3f ef       	ldi	r19, 0xFF	; 255
+
+}
+     f16:	c9 01       	movw	r24, r18
+     f18:	df 91       	pop	r29
+     f1a:	cf 91       	pop	r28
+     f1c:	08 95       	ret
+
+00000f1e <write_message>:
+			STR++;				\
+		}						\
+}
+
+void write_message(char* Header, uint8_t *Body, uint8_t BodySize)
+{// write a message to uart 
+     f1e:	cf 93       	push	r28
+     f20:	df 93       	push	r29
+     f22:	fc 01       	movw	r30, r24
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     f24:	5d 9b       	sbis	0x0b, 5	; 11
+     f26:	fe cf       	rjmp	.-4      	; 0xf24 <write_message+0x6>
+	UDR = c;
+     f28:	81 e0       	ldi	r24, 0x01	; 1
+     f2a:	8c b9       	out	0x0c, r24	; 12
+// for the message format details consult the 'read_message'
+
+
+	uint8_t bcc = 0; // clear the crc byte
+	putchr(SOH);
+	if(Header) 
+     f2c:	30 97       	sbiw	r30, 0x00	; 0
+     f2e:	11 f4       	brne	.+4      	; 0xf34 <write_message+0x16>
+     f30:	90 e0       	ldi	r25, 0x00	; 0
+     f32:	0a c0       	rjmp	.+20     	; 0xf48 <write_message+0x2a>
+     f34:	90 e0       	ldi	r25, 0x00	; 0
+     f36:	05 c0       	rjmp	.+10     	; 0xf42 <write_message+0x24>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     f38:	5d 9b       	sbis	0x0b, 5	; 11
+     f3a:	fe cf       	rjmp	.-4      	; 0xf38 <write_message+0x1a>
+
+	uint8_t bcc = 0; // clear the crc byte
+	putchr(SOH);
+	if(Header) 
+		while(*Header) {
+			PUTCHR_AND_CRC((*Header));
+     f3c:	98 27       	eor	r25, r24
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+     f3e:	8c b9       	out	0x0c, r24	; 12
+	uint8_t bcc = 0; // clear the crc byte
+	putchr(SOH);
+	if(Header) 
+		while(*Header) {
+			PUTCHR_AND_CRC((*Header));
+			Header++;
+     f40:	31 96       	adiw	r30, 0x01	; 1
+
+
+	uint8_t bcc = 0; // clear the crc byte
+	putchr(SOH);
+	if(Header) 
+		while(*Header) {
+     f42:	80 81       	ld	r24, Z
+     f44:	88 23       	and	r24, r24
+     f46:	c1 f7       	brne	.-16     	; 0xf38 <write_message+0x1a>
+			PUTCHR_AND_CRC((*Header));
+			Header++;
+		}
+	PUTCHR_AND_CRC(STX);
+     f48:	22 e0       	ldi	r18, 0x02	; 2
+     f4a:	29 27       	eor	r18, r25
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     f4c:	5d 9b       	sbis	0x0b, 5	; 11
+     f4e:	fe cf       	rjmp	.-4      	; 0xf4c <write_message+0x2e>
+	UDR = c;
+     f50:	82 e0       	ldi	r24, 0x02	; 2
+     f52:	8c b9       	out	0x0c, r24	; 12
+		while(*Header) {
+			PUTCHR_AND_CRC((*Header));
+			Header++;
+		}
+	PUTCHR_AND_CRC(STX);
+	if(Body) {
+     f54:	61 15       	cp	r22, r1
+     f56:	71 05       	cpc	r23, r1
+     f58:	59 f1       	breq	.+86     	; 0xfb0 <write_message+0x92>
+     f5a:	eb 01       	movw	r28, r22
+     f5c:	90 e0       	ldi	r25, 0x00	; 0
+     f5e:	21 c0       	rjmp	.+66     	; 0xfa2 <write_message+0x84>
+		uint8_t i = 0;
+		char *byteadr;
+		for(i=0; i < BodySize; i++) {
+			byteadr = uchar2h(*(Body+i));
+     f60:	a8 81       	ld	r26, Y
+
+char* uchar2h(uint8_t i)
+{
+   static char buf[3];
+   const char code[16]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+   buf[1] = code[i&0xf];
+     f62:	ea 2f       	mov	r30, r26
+     f64:	f0 e0       	ldi	r31, 0x00	; 0
+     f66:	ef 70       	andi	r30, 0x0F	; 15
+     f68:	f0 70       	andi	r31, 0x00	; 0
+     f6a:	ea 57       	subi	r30, 0x7A	; 122
+     f6c:	ff 4f       	sbci	r31, 0xFF	; 255
+     f6e:	80 81       	ld	r24, Z
+     f70:	80 93 97 00 	sts	0x0097, r24
+   buf[0] = code[i>>4];
+     f74:	a2 95       	swap	r26
+     f76:	af 70       	andi	r26, 0x0F	; 15
+     f78:	b0 e0       	ldi	r27, 0x00	; 0
+     f7a:	aa 57       	subi	r26, 0x7A	; 122
+     f7c:	bf 4f       	sbci	r27, 0xFF	; 255
+     f7e:	8c 91       	ld	r24, X
+     f80:	80 93 96 00 	sts	0x0096, r24
+   buf[2] = 0;
+     f84:	10 92 98 00 	sts	0x0098, r1
+     f88:	e6 e9       	ldi	r30, 0x96	; 150
+     f8a:	f0 e0       	ldi	r31, 0x00	; 0
+     f8c:	05 c0       	rjmp	.+10     	; 0xf98 <write_message+0x7a>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     f8e:	5d 9b       	sbis	0x0b, 5	; 11
+     f90:	fe cf       	rjmp	.-4      	; 0xf8e <write_message+0x70>
+	if(Body) {
+		uint8_t i = 0;
+		char *byteadr;
+		for(i=0; i < BodySize; i++) {
+			byteadr = uchar2h(*(Body+i));
+			PUTSTR_AND_CRC(byteadr);
+     f92:	28 27       	eor	r18, r24
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+     f94:	8c b9       	out	0x0c, r24	; 12
+	if(Body) {
+		uint8_t i = 0;
+		char *byteadr;
+		for(i=0; i < BodySize; i++) {
+			byteadr = uchar2h(*(Body+i));
+			PUTSTR_AND_CRC(byteadr);
+     f96:	31 96       	adiw	r30, 0x01	; 1
+     f98:	80 81       	ld	r24, Z
+     f9a:	88 23       	and	r24, r24
+     f9c:	c1 f7       	brne	.-16     	; 0xf8e <write_message+0x70>
+		}
+	PUTCHR_AND_CRC(STX);
+	if(Body) {
+		uint8_t i = 0;
+		char *byteadr;
+		for(i=0; i < BodySize; i++) {
+     f9e:	9f 5f       	subi	r25, 0xFF	; 255
+     fa0:	21 96       	adiw	r28, 0x01	; 1
+     fa2:	94 17       	cp	r25, r20
+     fa4:	e8 f2       	brcs	.-70     	; 0xf60 <write_message+0x42>
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     fa6:	5d 9b       	sbis	0x0b, 5	; 11
+     fa8:	fe cf       	rjmp	.-4      	; 0xfa6 <write_message+0x88>
+		char *byteadr;
+		for(i=0; i < BodySize; i++) {
+			byteadr = uchar2h(*(Body+i));
+			PUTSTR_AND_CRC(byteadr);
+		}
+		PUTCHR_AND_CRC(ETX);
+     faa:	83 e0       	ldi	r24, 0x03	; 3
+     fac:	28 27       	eor	r18, r24
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+     fae:	8c b9       	out	0x0c, r24	; 12
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     fb0:	5d 9b       	sbis	0x0b, 5	; 11
+     fb2:	fe cf       	rjmp	.-4      	; 0xfb0 <write_message+0x92>
+	UDR = c;
+     fb4:	84 e0       	ldi	r24, 0x04	; 4
+     fb6:	8c b9       	out	0x0c, r24	; 12
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+     fb8:	5d 9b       	sbis	0x0b, 5	; 11
+     fba:	fe cf       	rjmp	.-4      	; 0xfb8 <write_message+0x9a>
+			byteadr = uchar2h(*(Body+i));
+			PUTSTR_AND_CRC(byteadr);
+		}
+		PUTCHR_AND_CRC(ETX);
+	}
+	PUTCHR_AND_CRC(EOT);
+     fbc:	84 e0       	ldi	r24, 0x04	; 4
+     fbe:	28 27       	eor	r18, r24
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+     fc0:	2c b9       	out	0x0c, r18	; 12
+		}
+		PUTCHR_AND_CRC(ETX);
+	}
+	PUTCHR_AND_CRC(EOT);
+	putchr(bcc);
+}
+     fc2:	df 91       	pop	r29
+     fc4:	cf 91       	pop	r28
+     fc6:	08 95       	ret
+
+00000fc8 <do_cmd>:
+//---------------------------------------------------------------------------
+
+
+void do_cmd(char *cmd, uint8_t lencmd)
+{// parse a message and do something usefull
+     fc8:	ef 92       	push	r14
+     fca:	ff 92       	push	r15
+     fcc:	0f 93       	push	r16
+     fce:	1f 93       	push	r17
+     fd0:	df 93       	push	r29
+     fd2:	cf 93       	push	r28
+     fd4:	cd b7       	in	r28, 0x3d	; 61
+     fd6:	de b7       	in	r29, 0x3e	; 62
+     fd8:	28 97       	sbiw	r28, 0x08	; 8
+     fda:	0f b6       	in	r0, 0x3f	; 63
+     fdc:	f8 94       	cli
+     fde:	de bf       	out	0x3e, r29	; 62
+     fe0:	0f be       	out	0x3f, r0	; 63
+     fe2:	cd bf       	out	0x3d, r28	; 61
+     fe4:	7c 01       	movw	r14, r24
+     fe6:	26 2f       	mov	r18, r22
+uint8_t buf[6];
+uint16_t *rqst;
+
+	switch (cmd[0])
+     fe8:	fc 01       	movw	r30, r24
+     fea:	80 81       	ld	r24, Z
+     fec:	83 35       	cpi	r24, 0x53	; 83
+     fee:	09 f4       	brne	.+2      	; 0xff2 <do_cmd+0x2a>
+     ff0:	7e c0       	rjmp	.+252    	; 0x10ee <do_cmd+0x126>
+     ff2:	84 35       	cpi	r24, 0x54	; 84
+     ff4:	34 f4       	brge	.+12     	; 0x1002 <do_cmd+0x3a>
+     ff6:	8f 33       	cpi	r24, 0x3F	; 63
+     ff8:	41 f0       	breq	.+16     	; 0x100a <do_cmd+0x42>
+     ffa:	81 35       	cpi	r24, 0x51	; 81
+     ffc:	09 f0       	breq	.+2      	; 0x1000 <do_cmd+0x38>
+     ffe:	2d c1       	rjmp	.+602    	; 0x125a <do_cmd+0x292>
+    1000:	71 c0       	rjmp	.+226    	; 0x10e4 <do_cmd+0x11c>
+    1002:	83 37       	cpi	r24, 0x73	; 115
+    1004:	09 f0       	breq	.+2      	; 0x1008 <do_cmd+0x40>
+    1006:	29 c1       	rjmp	.+594    	; 0x125a <do_cmd+0x292>
+    1008:	72 c0       	rjmp	.+228    	; 0x10ee <do_cmd+0x126>
+	{
+	case EOT:	break;
+	case '?':		// report current relay status and target position
+		cmd[0] = IS_RELAY_ON(FilterLimitOut) + 2*IS_RELAY_ON(FilterLimitIn); // 0 - unknown, 1 - out, 2 - in, 3 - crazy
+    100a:	80 91 a1 00 	lds	r24, 0x00A1
+    100e:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    1012:	18 2f       	mov	r17, r24
+    1014:	80 91 b3 00 	lds	r24, 0x00B3
+    1018:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    101c:	88 0f       	add	r24, r24
+    101e:	81 0f       	add	r24, r17
+    1020:	f7 01       	movw	r30, r14
+    1022:	80 83       	st	Z, r24
+		cmd[1] = IS_RELAY_ON(TargetActual); // Target numbers are 0 or 1
+    1024:	80 91 b5 00 	lds	r24, 0x00B5
+    1028:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    102c:	f7 01       	movw	r30, r14
+    102e:	81 83       	std	Z+1, r24	; 0x01
+		uint16_t Tpos = Uadc; // Save current target position in local variable.
+    1030:	80 91 a8 00 	lds	r24, 0x00A8
+    1034:	90 91 a9 00 	lds	r25, 0x00A9
+    1038:	9a 83       	std	Y+2, r25	; 0x02
+    103a:	89 83       	std	Y+1, r24	; 0x01
+		cmd[2] = *(((char *)&Tpos)+1); // MSB goes first
+    103c:	8a 81       	ldd	r24, Y+2	; 0x02
+    103e:	82 83       	std	Z+2, r24	; 0x02
+		cmd[3] = *((char *)&Tpos);      // LSB goes last
+    1040:	89 81       	ldd	r24, Y+1	; 0x01
+    1042:	83 83       	std	Z+3, r24	; 0x03
+		cmd[4] = 3 - (IS_RELAY_ON(TargetRelayDown) + 2*IS_RELAY_ON(TargetRelayUp)); // 0 - OK, 1 - down, 2 - up, 3 - crazy
+    1044:	80 91 b1 00 	lds	r24, 0x00B1
+    1048:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    104c:	08 2f       	mov	r16, r24
+    104e:	80 91 a3 00 	lds	r24, 0x00A3
+    1052:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    1056:	13 e0       	ldi	r17, 0x03	; 3
+    1058:	21 2f       	mov	r18, r17
+    105a:	28 1b       	sub	r18, r24
+    105c:	80 2f       	mov	r24, r16
+    105e:	90 e0       	ldi	r25, 0x00	; 0
+    1060:	88 0f       	add	r24, r24
+    1062:	99 1f       	adc	r25, r25
+    1064:	28 1b       	sub	r18, r24
+    1066:	f7 01       	movw	r30, r14
+    1068:	24 83       	std	Z+4, r18	; 0x04
+		cmd[5] = 3 - (IS_RELAY_ON(FilterRelayIn) + 2*IS_RELAY_ON(FilterRelayOut)); // 0 - OK, 1 - 1, 2 - 2, 3 - crazy
+    106a:	80 91 99 00 	lds	r24, 0x0099
+    106e:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    1072:	08 2f       	mov	r16, r24
+    1074:	80 91 aa 00 	lds	r24, 0x00AA
+    1078:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    107c:	21 2f       	mov	r18, r17
+    107e:	28 1b       	sub	r18, r24
+    1080:	80 2f       	mov	r24, r16
+    1082:	90 e0       	ldi	r25, 0x00	; 0
+    1084:	88 0f       	add	r24, r24
+    1086:	99 1f       	adc	r25, r25
+    1088:	28 1b       	sub	r18, r24
+    108a:	f7 01       	movw	r30, r14
+    108c:	25 83       	std	Z+5, r18	; 0x05
+		cmd[6] = IS_RELAY_ON(TargetLimitDown) + 2*IS_RELAY_ON(TargetLimitUp); // 0 - OK, 1 - out, 2 - in, 3 - crazy
+    108e:	80 91 b4 00 	lds	r24, 0x00B4
+    1092:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    1096:	08 2f       	mov	r16, r24
+    1098:	80 91 a2 00 	lds	r24, 0x00A2
+    109c:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    10a0:	88 0f       	add	r24, r24
+    10a2:	80 0f       	add	r24, r16
+    10a4:	f7 01       	movw	r30, r14
+    10a6:	86 83       	std	Z+6, r24	; 0x06
+		cmd[7] = 3 - (IS_RELAY_ON(Target1Select) + 2*IS_RELAY_ON(Target2Select)); // 0 - OK, 1 - 1, 2 - 2, 3 - crazy
+    10a8:	80 91 ac 00 	lds	r24, 0x00AC
+    10ac:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    10b0:	08 2f       	mov	r16, r24
+    10b2:	80 91 a7 00 	lds	r24, 0x00A7
+    10b6:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    10ba:	18 1b       	sub	r17, r24
+    10bc:	80 2f       	mov	r24, r16
+    10be:	90 e0       	ldi	r25, 0x00	; 0
+    10c0:	88 0f       	add	r24, r24
+    10c2:	99 1f       	adc	r25, r25
+    10c4:	18 1b       	sub	r17, r24
+    10c6:	f7 01       	movw	r30, r14
+    10c8:	17 83       	std	Z+7, r17	; 0x07
+		cmd[8] = IS_RELAY_ON(ManualAuto);
+    10ca:	80 91 9b 00 	lds	r24, 0x009B
+    10ce:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    10d2:	f7 01       	movw	r30, r14
+    10d4:	80 87       	std	Z+8, r24	; 0x08
+		write_message("STATUS",cmd,9);
+    10d6:	80 e6       	ldi	r24, 0x60	; 96
+    10d8:	90 e0       	ldi	r25, 0x00	; 0
+    10da:	b7 01       	movw	r22, r14
+    10dc:	49 e0       	ldi	r20, 0x09	; 9
+    10de:	0e 94 8f 07 	call	0xf1e	; 0xf1e <write_message>
+    10e2:	bb c0       	rjmp	.+374    	; 0x125a <do_cmd+0x292>
+	break;
+	case 'Q':		// 	response to automatic device identification query
+					// 	PLEASE note that it is a plain text and not the standart 
+					//	message format
+		printstr_p(PSTR("SPINU70"));
+    10e4:	80 eb       	ldi	r24, 0xB0	; 176
+    10e6:	90 e0       	ldi	r25, 0x00	; 0
+    10e8:	0e 94 6b 04 	call	0x8d6	; 0x8d6 <printstr_p>
+    10ec:	b6 c0       	rjmp	.+364    	; 0x125a <do_cmd+0x292>
+	break;
+	case 's':
+	case 'S':      // Set new values for target number, target position and filter 
+		rqst = (uint16_t *) buf;
+    10ee:	8e 01       	movw	r16, r28
+    10f0:	0d 5f       	subi	r16, 0xFD	; 253
+    10f2:	1f 4f       	sbci	r17, 0xFF	; 255
+		if(!scan_uint16(rqst,3,cmd+2,lencmd-3)) {
+    10f4:	82 e0       	ldi	r24, 0x02	; 2
+    10f6:	90 e0       	ldi	r25, 0x00	; 0
+    10f8:	e8 0e       	add	r14, r24
+    10fa:	f9 1e       	adc	r15, r25
+    10fc:	23 50       	subi	r18, 0x03	; 3
+    10fe:	c8 01       	movw	r24, r16
+    1100:	63 e0       	ldi	r22, 0x03	; 3
+    1102:	a7 01       	movw	r20, r14
+    1104:	0e 94 9e 05 	call	0xb3c	; 0xb3c <scan_uint16>
+    1108:	88 23       	and	r24, r24
+    110a:	21 f4       	brne	.+8      	; 0x1114 <do_cmd+0x14c>
+			printstr_p("Failed to read new values\n");
+    110c:	87 e6       	ldi	r24, 0x67	; 103
+    110e:	90 e0       	ldi	r25, 0x00	; 0
+    1110:	0e 94 6b 04 	call	0x8d6	; 0x8d6 <printstr_p>
+		}
+		FilterRequested = (uint8_t) rqst[0];
+    1114:	f8 01       	movw	r30, r16
+    1116:	80 81       	ld	r24, Z
+    1118:	80 93 b2 00 	sts	0x00B2, r24
+		TargetRequested = (uint8_t) rqst[1];
+    111c:	82 81       	ldd	r24, Z+2	; 0x02
+    111e:	80 93 b7 00 	sts	0x00B7, r24
+		Urequested = rqst[2];
+    1122:	84 81       	ldd	r24, Z+4	; 0x04
+    1124:	95 81       	ldd	r25, Z+5	; 0x05
+    1126:	90 93 a5 00 	sts	0x00A5, r25
+    112a:	80 93 a4 00 	sts	0x00A4, r24
+// Do some checks of the requested values
+		FilterCurrent = IS_RELAY_ON(FilterLimitOut) + 2*IS_RELAY_ON(FilterLimitIn); // 0 - unknown, 1 - out, 2 - in, 3 - crazy
+    112e:	80 91 a1 00 	lds	r24, 0x00A1
+    1132:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    1136:	18 2f       	mov	r17, r24
+    1138:	80 91 b3 00 	lds	r24, 0x00B3
+    113c:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    1140:	88 0f       	add	r24, r24
+    1142:	81 0f       	add	r24, r17
+    1144:	80 93 b6 00 	sts	0x00B6, r24
+		TargetCurrent = IS_RELAY_ON(TargetActual);
+    1148:	80 91 b5 00 	lds	r24, 0x00B5
+    114c:	0e 94 01 01 	call	0x202	; 0x202 <IS_RELAY_ON>
+    1150:	38 2f       	mov	r19, r24
+    1152:	80 93 9a 00 	sts	0x009A, r24
+		if(FilterCurrent < 3 && FilterRequested > 1)
+    1156:	20 91 b6 00 	lds	r18, 0x00B6
+    115a:	23 30       	cpi	r18, 0x03	; 3
+    115c:	30 f5       	brcc	.+76     	; 0x11aa <do_cmd+0x1e2>
+    115e:	80 91 b2 00 	lds	r24, 0x00B2
+    1162:	82 30       	cpi	r24, 0x02	; 2
+    1164:	10 f1       	brcs	.+68     	; 0x11aa <do_cmd+0x1e2>
+		{
+			SET_TIMER(TimerBeep, (ONE_SECOND/4));
+    1166:	80 91 9d 00 	lds	r24, 0x009D
+    116a:	90 91 9e 00 	lds	r25, 0x009E
+    116e:	a0 91 9f 00 	lds	r26, 0x009F
+    1172:	b0 91 a0 00 	lds	r27, 0x00A0
+    1176:	00 97       	sbiw	r24, 0x00	; 0
+    1178:	a1 05       	cpc	r26, r1
+    117a:	b1 05       	cpc	r27, r1
+    117c:	a1 f4       	brne	.+40     	; 0x11a6 <do_cmd+0x1de>
+    117e:	80 91 ad 00 	lds	r24, 0x00AD
+    1182:	90 91 ae 00 	lds	r25, 0x00AE
+    1186:	a0 91 af 00 	lds	r26, 0x00AF
+    118a:	b0 91 b0 00 	lds	r27, 0x00B0
+    118e:	8c 5c       	subi	r24, 0xCC	; 204
+    1190:	97 4f       	sbci	r25, 0xF7	; 247
+    1192:	af 4f       	sbci	r26, 0xFF	; 255
+    1194:	bf 4f       	sbci	r27, 0xFF	; 255
+    1196:	80 93 9d 00 	sts	0x009D, r24
+    119a:	90 93 9e 00 	sts	0x009E, r25
+    119e:	a0 93 9f 00 	sts	0x009F, r26
+    11a2:	b0 93 a0 00 	sts	0x00A0, r27
+			FilterRequested = FilterCurrent;
+    11a6:	20 93 b2 00 	sts	0x00B2, r18
+		}
+		if(TargetRequested > 1)
+    11aa:	80 91 b7 00 	lds	r24, 0x00B7
+    11ae:	82 30       	cpi	r24, 0x02	; 2
+    11b0:	10 f1       	brcs	.+68     	; 0x11f6 <do_cmd+0x22e>
+		{
+			SET_TIMER(TimerBeep, (ONE_SECOND/4));
+    11b2:	80 91 9d 00 	lds	r24, 0x009D
+    11b6:	90 91 9e 00 	lds	r25, 0x009E
+    11ba:	a0 91 9f 00 	lds	r26, 0x009F
+    11be:	b0 91 a0 00 	lds	r27, 0x00A0
+    11c2:	00 97       	sbiw	r24, 0x00	; 0
+    11c4:	a1 05       	cpc	r26, r1
+    11c6:	b1 05       	cpc	r27, r1
+    11c8:	a1 f4       	brne	.+40     	; 0x11f2 <do_cmd+0x22a>
+    11ca:	80 91 ad 00 	lds	r24, 0x00AD
+    11ce:	90 91 ae 00 	lds	r25, 0x00AE
+    11d2:	a0 91 af 00 	lds	r26, 0x00AF
+    11d6:	b0 91 b0 00 	lds	r27, 0x00B0
+    11da:	8c 5c       	subi	r24, 0xCC	; 204
+    11dc:	97 4f       	sbci	r25, 0xF7	; 247
+    11de:	af 4f       	sbci	r26, 0xFF	; 255
+    11e0:	bf 4f       	sbci	r27, 0xFF	; 255
+    11e2:	80 93 9d 00 	sts	0x009D, r24
+    11e6:	90 93 9e 00 	sts	0x009E, r25
+    11ea:	a0 93 9f 00 	sts	0x009F, r26
+    11ee:	b0 93 a0 00 	sts	0x00A0, r27
+			TargetRequested = TargetCurrent;
+    11f2:	30 93 b7 00 	sts	0x00B7, r19
+		}
+		if(Urequested > 1023)
+    11f6:	80 91 a4 00 	lds	r24, 0x00A4
+    11fa:	90 91 a5 00 	lds	r25, 0x00A5
+    11fe:	80 50       	subi	r24, 0x00	; 0
+    1200:	94 40       	sbci	r25, 0x04	; 4
+    1202:	40 f1       	brcs	.+80     	; 0x1254 <do_cmd+0x28c>
+		{
+			SET_TIMER(TimerBeep, (ONE_SECOND/4));
+    1204:	80 91 9d 00 	lds	r24, 0x009D
+    1208:	90 91 9e 00 	lds	r25, 0x009E
+    120c:	a0 91 9f 00 	lds	r26, 0x009F
+    1210:	b0 91 a0 00 	lds	r27, 0x00A0
+    1214:	00 97       	sbiw	r24, 0x00	; 0
+    1216:	a1 05       	cpc	r26, r1
+    1218:	b1 05       	cpc	r27, r1
+    121a:	a1 f4       	brne	.+40     	; 0x1244 <do_cmd+0x27c>
+    121c:	80 91 ad 00 	lds	r24, 0x00AD
+    1220:	90 91 ae 00 	lds	r25, 0x00AE
+    1224:	a0 91 af 00 	lds	r26, 0x00AF
+    1228:	b0 91 b0 00 	lds	r27, 0x00B0
+    122c:	8c 5c       	subi	r24, 0xCC	; 204
+    122e:	97 4f       	sbci	r25, 0xF7	; 247
+    1230:	af 4f       	sbci	r26, 0xFF	; 255
+    1232:	bf 4f       	sbci	r27, 0xFF	; 255
+    1234:	80 93 9d 00 	sts	0x009D, r24
+    1238:	90 93 9e 00 	sts	0x009E, r25
+    123c:	a0 93 9f 00 	sts	0x009F, r26
+    1240:	b0 93 a0 00 	sts	0x00A0, r27
+			Urequested = Uadc;
+    1244:	80 91 a8 00 	lds	r24, 0x00A8
+    1248:	90 91 a9 00 	lds	r25, 0x00A9
+    124c:	90 93 a5 00 	sts	0x00A5, r25
+    1250:	80 93 a4 00 	sts	0x00A4, r24
+		}
+		IsFlashing = 1;
+    1254:	81 e0       	ldi	r24, 0x01	; 1
+    1256:	80 93 a6 00 	sts	0x00A6, r24
+	break;
+	default: break;
+	}
+
+}
+    125a:	28 96       	adiw	r28, 0x08	; 8
+    125c:	0f b6       	in	r0, 0x3f	; 63
+    125e:	f8 94       	cli
+    1260:	de bf       	out	0x3e, r29	; 62
+    1262:	0f be       	out	0x3f, r0	; 63
+    1264:	cd bf       	out	0x3d, r28	; 61
+    1266:	cf 91       	pop	r28
+    1268:	df 91       	pop	r29
+    126a:	1f 91       	pop	r17
+    126c:	0f 91       	pop	r16
+    126e:	ff 90       	pop	r15
+    1270:	ef 90       	pop	r14
+    1272:	08 95       	ret
+
+00001274 <main>:
+
+#define CBUFSIZE	20
+
+int
+main(void)
+{
+    1274:	8f 92       	push	r8
+    1276:	9f 92       	push	r9
+    1278:	af 92       	push	r10
+    127a:	bf 92       	push	r11
+    127c:	cf 92       	push	r12
+    127e:	df 92       	push	r13
+    1280:	ef 92       	push	r14
+    1282:	ff 92       	push	r15
+    1284:	0f 93       	push	r16
+    1286:	1f 93       	push	r17
+    1288:	df 93       	push	r29
+    128a:	cf 93       	push	r28
+    128c:	cd b7       	in	r28, 0x3d	; 61
+    128e:	de b7       	in	r29, 0x3e	; 62
+    1290:	65 97       	sbiw	r28, 0x15	; 21
+    1292:	0f b6       	in	r0, 0x3f	; 63
+    1294:	f8 94       	cli
+    1296:	de bf       	out	0x3e, r29	; 62
+    1298:	0f be       	out	0x3f, r0	; 63
+    129a:	cd bf       	out	0x3d, r28	; 61
+  char cbuf[CBUFSIZE];
+  int8_t i;
+  uint8_t uc;
+  
+  ioinit();
+    129c:	0e 94 7c 04 	call	0x8f8	; 0x8f8 <ioinit>
+			/*
+			* Our periodic 10 ms interrupt happened.  See what we can
+			* do about it.
+			*/
+			intflags.tmr_int = 0;
+			REFRESH_TIMER(TimerBeep);
+    12a0:	ee 24       	eor	r14, r14
+    12a2:	ea 94       	dec	r14
+    12a4:	fe 2c       	mov	r15, r14
+    12a6:	87 01       	movw	r16, r14
+			if(uc != SOH) {
+				SET_TIMER(TimerBeep, (ONE_SECOND/4));
+				putchr(NAK);  // Skip until SOH 
+				continue;
+			}
+			uc = sizeof(cbuf);
+    12a8:	74 e1       	ldi	r23, 0x14	; 20
+    12aa:	87 2e       	mov	r8, r23
+			i = read_message(cbuf,&uc);
+    12ac:	62 e0       	ldi	r22, 0x02	; 2
+    12ae:	c6 2e       	mov	r12, r22
+    12b0:	d1 2c       	mov	r13, r1
+    12b2:	cc 0e       	add	r12, r28
+    12b4:	dd 1e       	adc	r13, r29
+    12b6:	5e 01       	movw	r10, r28
+    12b8:	08 94       	sec
+    12ba:	a1 1c       	adc	r10, r1
+    12bc:	b1 1c       	adc	r11, r1
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+    12be:	55 e1       	ldi	r21, 0x15	; 21
+    12c0:	95 2e       	mov	r9, r21
+		  "\n"));
+#endif
+
+  for (;;)
+	{
+      wdt_reset();
+    12c2:	a8 95       	wdr
+
+      if (intflags.tmr_int)
+    12c4:	80 91 b8 00 	lds	r24, 0x00B8
+    12c8:	80 ff       	sbrs	r24, 0
+    12ca:	34 c0       	rjmp	.+104    	; 0x1334 <main+0xc0>
+		{
+			/*
+			* Our periodic 10 ms interrupt happened.  See what we can
+			* do about it.
+			*/
+			intflags.tmr_int = 0;
+    12cc:	80 91 b8 00 	lds	r24, 0x00B8
+    12d0:	8e 7f       	andi	r24, 0xFE	; 254
+    12d2:	80 93 b8 00 	sts	0x00B8, r24
+			REFRESH_TIMER(TimerBeep);
+    12d6:	20 91 9d 00 	lds	r18, 0x009D
+    12da:	30 91 9e 00 	lds	r19, 0x009E
+    12de:	40 91 9f 00 	lds	r20, 0x009F
+    12e2:	50 91 a0 00 	lds	r21, 0x00A0
+    12e6:	21 15       	cp	r18, r1
+    12e8:	31 05       	cpc	r19, r1
+    12ea:	41 05       	cpc	r20, r1
+    12ec:	51 05       	cpc	r21, r1
+    12ee:	a9 f0       	breq	.+42     	; 0x131a <main+0xa6>
+    12f0:	80 91 ad 00 	lds	r24, 0x00AD
+    12f4:	90 91 ae 00 	lds	r25, 0x00AE
+    12f8:	a0 91 af 00 	lds	r26, 0x00AF
+    12fc:	b0 91 b0 00 	lds	r27, 0x00B0
+    1300:	28 17       	cp	r18, r24
+    1302:	39 07       	cpc	r19, r25
+    1304:	4a 07       	cpc	r20, r26
+    1306:	5b 07       	cpc	r21, r27
+    1308:	40 f4       	brcc	.+16     	; 0x131a <main+0xa6>
+    130a:	e0 92 9d 00 	sts	0x009D, r14
+    130e:	f0 92 9e 00 	sts	0x009E, r15
+    1312:	00 93 9f 00 	sts	0x009F, r16
+    1316:	10 93 a0 00 	sts	0x00A0, r17
+
+			if(!IsFlashing) {
+    131a:	80 91 a6 00 	lds	r24, 0x00A6
+    131e:	88 23       	and	r24, r24
+    1320:	11 f4       	brne	.+4      	; 0x1326 <main+0xb2>
+				// Switch off LED on PD7
+				CONTROL_PORT &= ~_BV(CONTROL_PIN);
+    1322:	97 98       	cbi	0x12, 7	; 18
+    1324:	03 c0       	rjmp	.+6      	; 0x132c <main+0xb8>
+			} else {
+			// Toggle flash LED on PD7
+				CONTROL_PORT ^= _BV(CONTROL_PIN);
+    1326:	82 b3       	in	r24, 0x12	; 18
+    1328:	80 58       	subi	r24, 0x80	; 128
+    132a:	82 bb       	out	0x12, r24	; 18
+			}
+			Algorithm();	//  It is the main job of the whole project.
+    132c:	0e 94 ad 01 	call	0x35a	; 0x35a <Algorithm>
+#if HAVE_ADC
+		  /*
+		   * Enable next conversion.
+		   */
+			ADCSRA |= _BV(ADIE);
+    1330:	33 9a       	sbi	0x06, 3	; 6
+// start the conversion cycle
+			ADCSRA |= _BV(ADSC);   
+    1332:	36 9a       	sbi	0x06, 6	; 6
+#endif
+			//continue;  // Other interrupts may occure 
+		}
+#if HAVE_ADC
+      if (intflags.adc_int)
+    1334:	80 91 b8 00 	lds	r24, 0x00B8
+    1338:	81 ff       	sbrs	r24, 1
+    133a:	05 c0       	rjmp	.+10     	; 0x1346 <main+0xd2>
+		{
+			intflags.adc_int = 0;
+    133c:	80 91 b8 00 	lds	r24, 0x00B8
+    1340:	8d 7f       	andi	r24, 0xFD	; 253
+    1342:	80 93 b8 00 	sts	0x00B8, r24
+			//continue;  // Other interrupts may occure 
+		}
+#endif /* HAVE_ADC */
+
+      if (intflags.rx_int)
+    1346:	80 91 b8 00 	lds	r24, 0x00B8
+    134a:	82 ff       	sbrs	r24, 2
+    134c:	7b c0       	rjmp	.+246    	; 0x1444 <main+0x1d0>
+		{
+			intflags.rx_int = 0;
+    134e:	80 91 b8 00 	lds	r24, 0x00B8
+    1352:	8b 7f       	andi	r24, 0xFB	; 251
+    1354:	80 93 b8 00 	sts	0x00B8, r24
+			uc = rxbuff;
+    1358:	80 91 ab 00 	lds	r24, 0x00AB
+    135c:	89 83       	std	Y+1, r24	; 0x01
+			if(uc != SOH) {
+    135e:	81 30       	cpi	r24, 0x01	; 1
+    1360:	21 f1       	breq	.+72     	; 0x13aa <main+0x136>
+				SET_TIMER(TimerBeep, (ONE_SECOND/4));
+    1362:	80 91 9d 00 	lds	r24, 0x009D
+    1366:	90 91 9e 00 	lds	r25, 0x009E
+    136a:	a0 91 9f 00 	lds	r26, 0x009F
+    136e:	b0 91 a0 00 	lds	r27, 0x00A0
+    1372:	00 97       	sbiw	r24, 0x00	; 0
+    1374:	a1 05       	cpc	r26, r1
+    1376:	b1 05       	cpc	r27, r1
+    1378:	a1 f4       	brne	.+40     	; 0x13a2 <main+0x12e>
+    137a:	80 91 ad 00 	lds	r24, 0x00AD
+    137e:	90 91 ae 00 	lds	r25, 0x00AE
+    1382:	a0 91 af 00 	lds	r26, 0x00AF
+    1386:	b0 91 b0 00 	lds	r27, 0x00B0
+    138a:	8c 5c       	subi	r24, 0xCC	; 204
+    138c:	97 4f       	sbci	r25, 0xF7	; 247
+    138e:	af 4f       	sbci	r26, 0xFF	; 255
+    1390:	bf 4f       	sbci	r27, 0xFF	; 255
+    1392:	80 93 9d 00 	sts	0x009D, r24
+    1396:	90 93 9e 00 	sts	0x009E, r25
+    139a:	a0 93 9f 00 	sts	0x009F, r26
+    139e:	b0 93 a0 00 	sts	0x00A0, r27
+ * Send character c down the UART Tx, wait until tx holding register
+ * is empty.
+ */
+void putchr(uint8_t c)
+{
+	loop_until_bit_is_set(UCSRA, UDRE);
+    13a2:	5d 9b       	sbis	0x0b, 5	; 11
+    13a4:	fe cf       	rjmp	.-4      	; 0x13a2 <main+0x12e>
+	UDR = c;
+    13a6:	9c b8       	out	0x0c, r9	; 12
+    13a8:	8c cf       	rjmp	.-232    	; 0x12c2 <main+0x4e>
+			if(uc != SOH) {
+				SET_TIMER(TimerBeep, (ONE_SECOND/4));
+				putchr(NAK);  // Skip until SOH 
+				continue;
+			}
+			uc = sizeof(cbuf);
+    13aa:	89 82       	std	Y+1, r8	; 0x01
+			i = read_message(cbuf,&uc);
+    13ac:	c6 01       	movw	r24, r12
+    13ae:	b5 01       	movw	r22, r10
+    13b0:	0e 94 af 06 	call	0xd5e	; 0xd5e <read_message>
+    13b4:	98 2f       	mov	r25, r24
+			intflags.rx_int  = 0;
+    13b6:	80 91 b8 00 	lds	r24, 0x00B8
+    13ba:	8b 7f       	andi	r24, 0xFB	; 251
+    13bc:	80 93 b8 00 	sts	0x00B8, r24
+			intflags.adc_int = 0;
+    13c0:	80 91 b8 00 	lds	r24, 0x00B8
+    13c4:	8d 7f       	andi	r24, 0xFD	; 253
+    13c6:	80 93 b8 00 	sts	0x00B8, r24
+			intflags.tmr_int = 0;
+    13ca:	80 91 b8 00 	lds	r24, 0x00B8
+    13ce:	8e 7f       	andi	r24, 0xFE	; 254
+    13d0:	80 93 b8 00 	sts	0x00B8, r24
+			switch (i) {
+    13d4:	9f 3f       	cpi	r25, 0xFF	; 255
+    13d6:	41 f0       	breq	.+16     	; 0x13e8 <main+0x174>
+    13d8:	99 23       	and	r25, r25
+    13da:	19 f0       	breq	.+6      	; 0x13e2 <main+0x16e>
+    13dc:	9e 3f       	cpi	r25, 0xFE	; 254
+    13de:	69 f5       	brne	.+90     	; 0x143a <main+0x1c6>
+    13e0:	06 c0       	rjmp	.+12     	; 0x13ee <main+0x17a>
+			case 0: 
+				printstr_p(PSTR("\nToo many stray interrupts. Message is not read\n"));
+    13e2:	8f e7       	ldi	r24, 0x7F	; 127
+    13e4:	90 e0       	ldi	r25, 0x00	; 0
+    13e6:	05 c0       	rjmp	.+10     	; 0x13f2 <main+0x17e>
+				SET_TIMER(TimerBeep, ONE_SECOND);
+			break;
+			case -1:
+				printstr_p(PSTR("\nTransmission error\n"));
+    13e8:	8a e6       	ldi	r24, 0x6A	; 106
+    13ea:	90 e0       	ldi	r25, 0x00	; 0
+    13ec:	02 c0       	rjmp	.+4      	; 0x13f2 <main+0x17e>
+				SET_TIMER(TimerBeep, ONE_SECOND);
+			break;
+			case -2:
+				printstr_p(PSTR("\nMessage is too long\n"));
+    13ee:	84 e5       	ldi	r24, 0x54	; 84
+    13f0:	90 e0       	ldi	r25, 0x00	; 0
+    13f2:	0e 94 6b 04 	call	0x8d6	; 0x8d6 <printstr_p>
+				SET_TIMER(TimerBeep, ONE_SECOND);
+    13f6:	80 91 9d 00 	lds	r24, 0x009D
+    13fa:	90 91 9e 00 	lds	r25, 0x009E
+    13fe:	a0 91 9f 00 	lds	r26, 0x009F
+    1402:	b0 91 a0 00 	lds	r27, 0x00A0
+    1406:	00 97       	sbiw	r24, 0x00	; 0
+    1408:	a1 05       	cpc	r26, r1
+    140a:	b1 05       	cpc	r27, r1
+    140c:	09 f0       	breq	.+2      	; 0x1410 <main+0x19c>
+    140e:	59 cf       	rjmp	.-334    	; 0x12c2 <main+0x4e>
+    1410:	80 91 ad 00 	lds	r24, 0x00AD
+    1414:	90 91 ae 00 	lds	r25, 0x00AE
+    1418:	a0 91 af 00 	lds	r26, 0x00AF
+    141c:	b0 91 b0 00 	lds	r27, 0x00B0
+    1420:	80 53       	subi	r24, 0x30	; 48
+    1422:	9f 4d       	sbci	r25, 0xDF	; 223
+    1424:	af 4f       	sbci	r26, 0xFF	; 255
+    1426:	bf 4f       	sbci	r27, 0xFF	; 255
+    1428:	80 93 9d 00 	sts	0x009D, r24
+    142c:	90 93 9e 00 	sts	0x009E, r25
+    1430:	a0 93 9f 00 	sts	0x009F, r26
+    1434:	b0 93 a0 00 	sts	0x00A0, r27
+    1438:	44 cf       	rjmp	.-376    	; 0x12c2 <main+0x4e>
+			break;
+			default: 
+				//Parse the message and do something usefull here
+				do_cmd(cbuf,uc);
+    143a:	c6 01       	movw	r24, r12
+    143c:	69 81       	ldd	r22, Y+1	; 0x01
+    143e:	0e 94 e4 07 	call	0xfc8	; 0xfc8 <do_cmd>
+    1442:	3f cf       	rjmp	.-386    	; 0x12c2 <main+0x4e>
+				// The recovery is (should be) the inherent property of 
+				// the algorithm itself. :) 
+			continue;	// Let us see what we have in reality ;-)
+		}
+	
+      sleep_mode();
+    1444:	85 b7       	in	r24, 0x35	; 53
+    1446:	80 64       	ori	r24, 0x40	; 64
+    1448:	85 bf       	out	0x35, r24	; 53
+    144a:	88 95       	sleep
+    144c:	85 b7       	in	r24, 0x35	; 53
+    144e:	8f 7b       	andi	r24, 0xBF	; 191
+    1450:	85 bf       	out	0x35, r24	; 53
+    1452:	37 cf       	rjmp	.-402    	; 0x12c2 <main+0x4e>
+
+00001454 <_exit>:
+    1454:	f8 94       	cli
+
+00001456 <__stop_program>:
+    1456:	ff cf       	rjmp	.-2      	; 0x1456 <__stop_program>

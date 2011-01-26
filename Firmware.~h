@@ -1,0 +1,105 @@
+//--------  Define communication attributes of IEC 61107 ( standart ASCII codes ) --------
+#ifndef RelayFirmwareH
+#define RelayFirmwareH
+
+#define SOH	0x01
+#define STX	0x02
+#define ETX	0x03
+#define EOT	0x04
+#define ACK	0x06
+#define NAK	0x15
+/*
+const char *sSOH = "<SOH>";  // Symbolic names of the above constants
+const char *sSTX = "<STX>";
+const char *sETX = "<ETX>";
+const char *sEOT = "<EOT>";
+const char *sACK = "<ACK>";
+const char *sNAK = "<NAK>"; 
+*/
+typedef unsigned short uint16_t;
+typedef signed short int16_t;
+typedef unsigned char uint8_t;
+typedef signed char int8_t;
+typedef uint16_t 	RELAYONOFF_T;
+typedef uint8_t		RELAYCONFIG_T;
+
+//  Relay configuration structure: each relay is described individualy using this structure.
+
+typedef struct  {
+	RELAYONOFF_T On;     // Packed: threshold (0->9 bits) and delay (10->15 bits)
+						 // to switch a relay on
+						 // Threshold:  voltage (ADC counts = 10 bits)
+						 // Delay:  6 bits = 2 bits (14-15) for scale +4 bits for value (10->13)
+	RELAYONOFF_T Off;    // Delay and Threshold to switch a relay off
+	RELAYCONFIG_T Relay; // Packed: Relay pin number ( 0->2 bits), port (A,B,C,D bits 4->5)
+                         // Bit 3 - Enable/Disable
+    uint8_t PCDFmin,PCDFmax;    //  PCDF min-max threshold value
+    uint8_t Power;
+} RELAYONOFF;
+
+//  Macros to deal with packed relay configuration.
+//#define MAXTIMEVALUE	7		// Maximum value for given time scale
+//#define GET_PORT(Relay)		(((Relay)&0x20) ? ((Relay)&0x10 ? PORTD : PORTC) : ((Relay)&0x10 ? PORTB : PORTA))
+//#define GET_DDR(Relay)		(((Relay)&0x20) ? ((Relay)&0x10 ? DDRD : DDRC) : ((Relay)& 0x10 ? DDRB : DDRA))
+#define GET_PIN(Relay)		((Relay)&7)
+//#define GET_PCDFFLAG(Relay)	((Relay)>>6)
+#define GET_THRESHOLD(OnOff) ((OnOff)&0x3FF)
+#define GET_TIMESCALE(OnOff) (((OnOff)>>14)&0x3)
+#define GET_TIMEVALUE(OnOff) (((OnOff)>>10)&0xF)
+#define GET_ENABLE(Relay)    ((Relay)&0x8)
+#define SET_PORT(Port,Relay) { 			    \
+	(Relay) &= 0xCF; 				        \
+	if((Port) == 'B') (Relay) |= 0x10; 	\
+	if((Port) == 'C') (Relay) |= 0x20; 	\
+	if((Port) == 'D') (Relay) |= 0x30; 	\
+}
+#define SET_PIN(Pin,Relay) { 			\
+	(Relay) &= 0xf8; 					\
+	(Relay) |= Pin&7; 					\
+}
+#define SET_ENABLE(Flag,Relay) {		\
+	(Relay) &= 0xf7;					\
+	if(Flag) (Relay) |= 0x8;			\
+}
+#define SET_THRESHOLD(Thr,OnOff) {		\
+	(OnOff) &= 0xfc00;					\
+	(OnOff) |= ((RELAYONOFF_T)Thr)&0x3ff; 				\
+}
+#define SET_TIMESCALE(Scale,OnOff)	{	\
+	(OnOff) &= 0x3FFF;  				\
+	(OnOff) |= (Scale&3)<<14;			\
+}
+#define SET_TIMEVALUE(Timval,OnOff)	{	\
+	(OnOff) &= 0xC3FF;				    \
+	(OnOff) |= (Timval&0xF)<<10;		\
+}
+#define SET_RELAY_CONFIG(PtrRelay,Port,Pin,ThOn,ThOff,TSOn,TSOff,TimOn,TimOff,Pcdf_min,Pcdf_max,POWER,ENABLE) { 	\
+    (PtrRelay)->Relay = 0;                                                                          \
+	SET_ENABLE(ENABLE,(PtrRelay)->Relay);												        \
+	SET_PORT(Port,(PtrRelay)->Relay);												             	\
+	SET_PIN(Pin,(PtrRelay)->Relay);														            \
+	SET_THRESHOLD(ThOn,(PtrRelay)->On);													            \
+	SET_TIMESCALE(TSOn,(PtrRelay)->On);													            \
+	SET_TIMEVALUE(TimOn,(PtrRelay)->On);												            \
+	SET_THRESHOLD(ThOff,(PtrRelay)->Off);												            \
+	SET_TIMESCALE(TSOff,(PtrRelay)->Off);												            \
+	SET_TIMEVALUE(TimOff,(PtrRelay)->Off);												            \
+    (PtrRelay)->PCDFmin = Pcdf_min;                                                                   \
+    (PtrRelay)->PCDFmax = Pcdf_max;                                                                   \
+    (PtrRelay)->Power   = POWER;                                                                   \
+}
+
+//#define IS_RELAY_ON(Relay) 	(GET_PORT(Relay) & _BV(GET_PIN(Relay)))
+
+#define NUMRELAY	7
+
+typedef struct  { // Storage of device configuration
+uint8_t Initialised; // Flag to indicate that this structure has been initialised (when it is read from eeprom)
+RELAYONOFF RelayOnOff[NUMRELAY];
+int8_t Tcorr[3];  // Temperature correction coefficients
+uint16_t ADCtimer;  // Time interval (sec) to measure the battery voltage
+uint8_t MaxPower; // Maximum power to consume by all outputs
+}RELAYCONFIG;
+
+#endif
+
