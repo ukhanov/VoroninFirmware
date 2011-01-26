@@ -1,0 +1,17 @@
+26-January-2011  Initial commit by Mikhail Ukhanov.
+This firmware is used to drive the mechanic of our target station.
+The design software is WinAvr and ProgrammersNotepad.
+The microcontroller is Atmel AVR ATmega-16
+The board used in the project is made by www.Olimex.com It is Olimex AVR-IO-M16.
+See manufaturer web site for details of the board desing.
+
+The code is far-far from been nice. Many things need cleaning.
+I suspect that it contains errors and even funny things. 
+But it works in our case.
+
+The origin of the code was taken from the "lagedemo" example by Joerg Wunsch
+under beer-ware license. I would like to buy him a beer if it happens to meet him 
+some day.
+
+You may use it under the same (beer-ware) license terms. It is provided "as is"
+without (even implied) warranties.
