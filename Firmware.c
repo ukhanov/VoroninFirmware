@@ -37,6 +37,8 @@
 
 //#define DEBUG 1
 #undef DEBUG
+#define FILTER_ONLY
+//#undef FILTER_ONLY
 
 #include "Firmware.h"
 
@@ -142,6 +144,8 @@ uint8_t r;
 }
 //---------------------------------------------------------------------------
 
+#if !defined(FILTER_ONLY)
+
 #define SELECT_TARGET1 { 		\
 	RELAY_OFF(Target2Select);	\
 	RELAY_ON(Target1Select); 	\
@@ -190,6 +194,7 @@ TargetCare()
 		MoveTargetOut();
 	}
 }
+#endif   // FILTER_ONLY
 //---------------------------------------------------------------------------
 
 void 
@@ -250,7 +255,9 @@ uint16_t i;
 	
 	if(ItWasManual)
 	{
+#if !defined(FILTER_ONLY)
 		TargetCare();
+#endif
 		ItWasManual = 0;
 		TargetCurrent = IS_RELAY_ON(TargetActual);
 		FilterCurrent = GET_CURRENT_FILTER;
@@ -259,7 +266,7 @@ uint16_t i;
 			FilterRequested = FilterCurrent-1;
 		}
 	}
-		
+#if !defined(FILTER_ONLY)		
 	if(TargetCurrent != TargetRequested) {
 		
 		// Move current target out of the beam
@@ -336,7 +343,7 @@ uint16_t i;
 			IsFlashing = 0;
 		}
 	}
-	
+#endif   // FILTER_ONLY	
 // Filter ON / OFF handling
 	FilterCurrent = GET_CURRENT_FILTER;
 	if(FilterCurrent > 2 )
